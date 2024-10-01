@@ -4,9 +4,12 @@
 #define SCREEN_HEIGHT 400 
 #define SCREEN_WIDTH 640
 #define APPLE_HEIGHT 32
-typedef unsigned int UINT16; 
+#define BASKET_HEIGHT 32
 
-int apple_bitmap[APPLE_HEIGHT] = 
+
+typedef unsigned long int UINT32; 
+
+UINT32 apple_bitmap[APPLE_HEIGHT] = 
 {
   0x00018000, 
   0x00018000, 
@@ -40,3 +43,5 @@ int apple_bitmap[APPLE_HEIGHT] =
   0x01FFFF80, 
   0x00FFFF00,
 };
+
+int basket_bitmap[
