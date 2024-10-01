@@ -1,0 +1,42 @@
+#include <stdio.h> 
+#include <osbind.h>
+
+#define SCREEN_HEIGHT 400 
+#define SCREEN_WIDTH 640
+#define APPLE_HEIGHT 32
+typedef unsigned int UINT16; 
+
+int apple_bitmap[APPLE_HEIGHT] = 
+{
+  0x00018000, 
+  0x00018000, 
+  0x00018000, 
+  0x00018000, 
+  0x00018000, 
+  0x00FFFF00, 
+  0x1FF99FF8, 
+  0x7FE187FE,
+  0xFFF18FFF, 
+  0xFFF99FFF, 
+  0xFFFC3FFF, 
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0x7FFFFFFE, 
+  0x3FFFFFFC, 
+  0x1FFFFFF8, 
+  0x0FFFFFF0, 
+  0x03FFFFC0, 
+  0x01FFFF80, 
+  0x00FFFF00,
+};
