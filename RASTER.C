@@ -1,28 +1,66 @@
+#include <osbind.h>
 #include "raster.h"
 
-void plot_apple_32(UINT32 *base, int x, int y, 
-                    const UINT32 *bitmap, unsigned int height)
-{ 
-    UINT32 *next = base + (y * 20) + ( x >> 5); 
-    int i = 0;      
+UINT32 apple_bitmap[APPLE_HEIGHT] = 
+{
+  0x00018000, 
+  0x00018000, 
+  0x00018000, 
+  0x00018000, 
+  0x00018000, 
+  0x00FFFF00, 
+  0x1FF99FF8, 
+  0x7FE187FE,
+  0xFFF18FFF, 
+  0xFFF99FFF, 
+  0xFFFC3FFF, 
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0xFFFFFFFF,
+  0x7FFFFFFE, 
+  0x3FFFFFFC, 
+  0x1FFFFFF8, 
+  0x0FFFFFF0, 
+  0x03FFFFC0, 
+  0x01FFFF80, 
+  0x00FFFF00,
+};
 
-    while(i < height)
-    { 
-        *next = bitmap[i]; 
-        next += 20; 
-        i += 1;
-    } 
-} 
-
-void plot_basket_64(UINT32 *base, int x, int y, 
-                    const UINT32 *bitmap[BASKET_HEIGHT][2], unsigned int height)
+UINT32 basket_bitmap[BASKET_HEIGHT][2] = 
 { 
-    int i;
-    UINT32 *next;
-    
-    for (i = 0; i < height; i++) {
-        next = base + (y + i) * (SCREEN_WIDTH >> 5) + (x >> 5);
-        *next = bitmap[i][0];
-        *(next + 1) = bitmap[i][1];
-    }
+    {0xFFFFFFFF,0xFFFFFFFF},
+    {0xFFFFFFFF,0xFFFFFFFF},
+    {0xF3333333,0x3333333F},
+    {0xF3333333,0x3333333F},
+    {0x3CCCCCCC,0xCCCCCCCC},
+    {0x3CCCCCCC,0xCCCCCCCC},
+    {0x33333333,0x3333333C},
+    {0x33333333,0x3333333C},
+    {0x0CCCCCCC,0xCCCCCCF0},
+    {0x0CCCCCCC,0xCCCCCCF0},
+    {0x0F333333,0x33333330}, 
+    {0x0F333333,0x33333330}, 
+    {0x03CCCCCC,0xCCCCCCC0},
+    {0x03CCCCCC,0xCCCCCCC0},
+    {0x03FFFFFF,0xFFFFFFC0},
+    {0x03FFFFFF,0xFFFFFFC0} 
+};
+
+int main()
+{
+	UINT32 *FB = Physbase();  
+	plot_apple_32(FB, 400, 100, apple_bitmap, APPLE_HEIGHT); 
+	plot_basket_64(FB, 400, 200, basket_bitmap, BASKET_HEIGHT);
+
+	return 0;
 }
