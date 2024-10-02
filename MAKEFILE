@@ -1,7 +1,7 @@
 test: tst_rast.o raster.o
 	cc68x -g tst_rast.o raster.o -o test
 
-tst_rast.o: tst_rast.c raster.h types.h
+tst_rast.o: tst_rast.c raster.h types.h bitmaps.h
 	cc68x -g -c tst_rast.c
 
 raster.o: raster.c raster.h
