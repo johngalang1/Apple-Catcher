@@ -1,12 +1,5 @@
-#include <stdio.h> 
-#include <osbind.h>
-
-#define SCREEN_HEIGHT 400 
-#define SCREEN_WIDTH 640
-#define APPLE_HEIGHT 32
-#define BASKET_HEIGHT 16
-
-typedef unsigned long int UINT32; 
+#ifndef BITMAPS_H
+#define BITMAPS_H
 
 UINT32 apple_bitmap[APPLE_HEIGHT] = 
 {
@@ -62,3 +55,5 @@ UINT32 basket_bitmap[BASKET_HEIGHT][2] =
     {0x03FFFFFF,0xFFFFFFC0},
     {0x03FFFFFF,0xFFFFFFC0} 
 };
+
+#endif
