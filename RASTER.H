@@ -9,6 +9,6 @@ void plot_basket_64(UINT32 *base, int x, int y,
 void plot_apple_32(UINT32 *base, int x, int y, 
                     const UINT32 *bitmap, unsigned int height);
 
-
+void clear_screen(UINT32 *base);
 
 #endif
