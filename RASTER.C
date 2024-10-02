@@ -1,66 +1,58 @@
-#include <osbind.h>
 #include "raster.h"
 
-UINT32 apple_bitmap[APPLE_HEIGHT] = 
-{
-  0x00018000, 
-  0x00018000, 
-  0x00018000, 
-  0x00018000, 
-  0x00018000, 
-  0x00FFFF00, 
-  0x1FF99FF8, 
-  0x7FE187FE,
-  0xFFF18FFF, 
-  0xFFF99FFF, 
-  0xFFFC3FFF, 
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0xFFFFFFFF,
-  0x7FFFFFFE, 
-  0x3FFFFFFC, 
-  0x1FFFFFF8, 
-  0x0FFFFFF0, 
-  0x03FFFFC0, 
-  0x01FFFF80, 
-  0x00FFFF00,
-};
-
-UINT32 basket_bitmap[BASKET_HEIGHT][2] = 
+/* 
+NAME: plot_basket_32
+PARAMETERS: *base (framebuffer), x position of the screen, y position of the screen, 
+            bitmap of apple, height of apple
+PURPOSE: To plot an apple onto the screen 
+DETAILS: 
+*/
+void plot_apple_32(UINT32 *base, int x, int y, 
+                    const UINT32 *bitmap, unsigned int height)
 { 
-    {0xFFFFFFFF,0xFFFFFFFF},
-    {0xFFFFFFFF,0xFFFFFFFF},
-    {0xF3333333,0x3333333F},
-    {0xF3333333,0x3333333F},
-    {0x3CCCCCCC,0xCCCCCCCC},
-    {0x3CCCCCCC,0xCCCCCCCC},
-    {0x33333333,0x3333333C},
-    {0x33333333,0x3333333C},
-    {0x0CCCCCCC,0xCCCCCCF0},
-    {0x0CCCCCCC,0xCCCCCCF0},
-    {0x0F333333,0x33333330}, 
-    {0x0F333333,0x33333330}, 
-    {0x03CCCCCC,0xCCCCCCC0},
-    {0x03CCCCCC,0xCCCCCCC0},
-    {0x03FFFFFF,0xFFFFFFC0},
-    {0x03FFFFFF,0xFFFFFFC0} 
-};
+    UINT32 *next = base + (y * 20) + ( x >> 5); 
+    int i = 0;      
 
-int main()
-{
-	UINT32 *FB = Physbase();  
-	plot_apple_32(FB, 400, 100, apple_bitmap, APPLE_HEIGHT); 
-	plot_basket_64(FB, 400, 200, basket_bitmap, BASKET_HEIGHT);
+    while(i < height)
+    { 
+        *next = bitmap[i]; 
+        next += 20; 
+        i += 1;
+    } 
+} 
+/* 
+NAME: plot_basket_64
+PARAMETERS: *base (framebuffer), x position of the screen, y position of the screen, 
+            bitmap of basket, height of basket 
+PURPOSE: To plot the basket onto the screen 
+DETAILS: 
+*/
+void plot_basket_64(UINT32 *base, int x, int y, 
+                    const UINT32 *bitmap[BASKET_HEIGHT][2], unsigned int height)
+{ 
+    int i;
+    UINT32 *next;
+    
+    for (i = 0; i < height; i++) {
+        next = base + (y + i) * (SCREEN_WIDTH >> 5) + (x >> 5);
+        *next = bitmap[i][0];
+        *(next + 1) = bitmap[i][1];
+    }
+}
+/* 
+NAME: clear_screen
+PARAMETERS: *base (framebuffer)
+PURPOSE: To clear the screen of any pixels that are currently existing
+DETAILS: Fills every 32 bits with 0's for a total of 8000 iterations, 
+        effectively clearing the entire screen
+*/
+void clear_screen(UINT32 *base)
+{ 
+    UINT32 clear_longword = (SCREEN_WIDTH * SCREEN_HEIGHT) >> 5; 
+    int i; 
 
-	return 0;
+    for(i = 0; i < clear_longword; i++)
+    { 
+        base[i] = 0x00000000;
+    }
 }
