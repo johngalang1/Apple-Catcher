@@ -8,4 +8,4 @@ raster.o: raster.c raster.h
 	cc68x -g -c raster.c
 
 clean:
-	$(RM) *.o tst_rast
+	$(RM) *.o test
