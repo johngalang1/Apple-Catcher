@@ -76,3 +76,26 @@ void clear_screen(UINT32 *base)
         base[i] = 0x00000000;
     }
 }
+
+/*
+ NAME: plot_vertical_line
+ PARAMETERS: *base (framebuffer), int x (x location to be plotted), int n(y value to start), int m(y value to stop)
+ PURPOSE: to plot a vertical line 1-pixel thick on the screen
+ DETAILS: plots a 1-pixel thick vertical line at an x value (where 0 <= X < SCREEN_WIDTH),
+            starts at y = n and ends at y = m.
+ */
+void print_vertical_line(UINT32 *base, int x, int n, int m)
+{
+    UINT32 *next = base + (n * 20) + (x >> 5);
+    int r = x and 31;
+    int i;
+    if(x >= 0 && x < SCREEN_WIDTH)
+    {
+        for(i = 0; i < m-n; i++)
+        {
+            *next |= 31 - r;
+            *next += 20;
+        }
+    }
+}
+
