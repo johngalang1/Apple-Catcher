@@ -1,11 +1,23 @@
 #include "raster.h"
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: RASTER.C
+PURPOSE: CONTAINS ALL DEVELOPED FUNCTIONS
+*/
 
 /* 
 NAME: plot_basket_32
-PARAMETERS: *base (framebuffer), x position of the screen, y position of the screen, 
-            bitmap of apple, height of apple
+PARAMETERS: *base (framebuffer), 
+            x position of the screen, 
+            y position of the screen, 
+            bitmap of apple, 
+            height of apple
 PURPOSE: To plot an apple onto the screen 
-DETAILS: 
+DETAILS: Calculates the starting memory address in the framebuffer to the given 
+    x,y coordinates. Each row consists of 20, 32 pixel blocks. 
+    The function then iterates over each row of the bitmap and writes it to the 
+    correct position in the framebuffer. After plotting each row, the function 
+    advances the framebuffer pointer by 20 to move down to the next screen row.
 */
 void plot_apple_32(UINT32 *base, int x, int y, 
                     const UINT32 *bitmap, unsigned int height)
@@ -22,10 +34,18 @@ void plot_apple_32(UINT32 *base, int x, int y,
 } 
 /* 
 NAME: plot_basket_64
-PARAMETERS: *base (framebuffer), x position of the screen, y position of the screen, 
-            bitmap of basket, height of basket 
+PARAMETERS: *base (framebuffer), 
+            x position of the screen, 
+            y position of the screen, 
+            bitmap of basket, 
+            height of basket 
 PURPOSE: To plot the basket onto the screen 
-DETAILS: 
+DETAILS:  Calculates the starting memory address in the framebuffer to the given 
+    x, y coordinates. Since each row of the screen is 640 pixels wide, the function adjusts the pointer 
+    by dividing the screen width by 32 (as each `UINT32` holds 32 pixels). The basket bitmap is 64 pixels 
+    wide, so each row consists of two `UINT32` values, stored in `bitmap[i][0]` and `bitmap[i][1]`. 
+    The function iterates through each row of the bitmap, writing both parts of the row to the framebuffer. 
+    After plotting each row, it advances to the next line on the screen and continues the process until all rows are plotted.
 */
 void plot_basket_64(UINT32 *base, int x, int y, 
                     const UINT32 *bitmap[BASKET_HEIGHT][2], unsigned int height)
@@ -43,8 +63,8 @@ void plot_basket_64(UINT32 *base, int x, int y,
 NAME: clear_screen
 PARAMETERS: *base (framebuffer)
 PURPOSE: To clear the screen of any pixels that are currently existing
-DETAILS: Fills every 32 bits with 0's for a total of 8000 iterations, 
-        effectively clearing the entire screen
+DETAILS: Fills every 32 bits with 0's for a total of 8000 iterations, since 
+        (640 * 400) / 32 = 8000, effectively clearing the entire screen
 */
 void clear_screen(UINT32 *base)
 { 
