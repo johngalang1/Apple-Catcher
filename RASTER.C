@@ -84,7 +84,7 @@ void clear_screen(UINT32 *base)
  DETAILS: plots a 1-pixel thick vertical line at an x value (where 0 <= X < SCREEN_WIDTH),
             starts at y = n and ends at y = m.
  */
-void print_vertical_line(UINT32 *base, int x, int n, int m)
+void plot_vertical_line(UINT32 *base, int x, int n, int m)
 {
     UINT32 *next = base + (n * 20) + (x >> 5);
     int r = x and 31;
