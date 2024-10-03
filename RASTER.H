@@ -3,6 +3,16 @@
 
 #include "types.h"
 
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: RASTER.H 
+PURPOSE: CONTAINS ALL FUNCTION HEADERS USED FOR THE PROGRAM INCLUDING: 
+        - Plot Basket 
+        - Plot Apple 
+        - Clear Screen 
+        - Plot Vertical Line 
+        - Plot Horizontal Line
+*/
 void plot_basket_64(UINT32 *base, int x, int y, 
                     const UINT32 *bitmap[BASKET_HEIGHT][2], unsigned int height); 
 
