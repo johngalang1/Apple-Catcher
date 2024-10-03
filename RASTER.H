@@ -21,4 +21,6 @@ void plot_apple_32(UINT32 *base, int x, int y,
 
 void clear_screen(UINT32 *base);
 
+void print_vertical_line(UINT32 *base, int x, int n, int m);
+
 #endif
