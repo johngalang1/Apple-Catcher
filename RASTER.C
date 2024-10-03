@@ -87,7 +87,7 @@ void clear_screen(UINT32 *base)
 void plot_vertical_line(UINT32 *base, int x, int n, int m)
 {
     UINT32 *next = base + (n * 20) + (x >> 5);
-    int r = x and 31;
+    int r = x && 31;
     int i;
     if(x >= 0 && x < SCREEN_WIDTH)
     {
