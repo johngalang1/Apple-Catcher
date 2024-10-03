@@ -1,5 +1,10 @@
 #ifndef BITMAPS_H
 #define BITMAPS_H
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: bitmaps.h
+PURPOSE: Contains all bitmaps for the game
+*/
 
 UINT32 apple_bitmap[APPLE_HEIGHT] = 
 {
