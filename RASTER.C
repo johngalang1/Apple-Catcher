@@ -94,7 +94,7 @@ void plot_vertical_line(UINT32 *base, int x, int n, int m)
         for(i = 0; i < m-n; i++)
         {
             *next |= 31 - r;
-            *next += 20;
+            next += 20;
         }
     }
 }
