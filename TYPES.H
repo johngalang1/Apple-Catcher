@@ -9,6 +9,7 @@ PURPOSE: Contains all defined data types and constants for the program
 #define SCREEN_WIDTH 640
 #define BASKET_HEIGHT 16
 #define APPLE_HEIGHT 32
+#define CHARACTER_HEIGHT 32
 
 typedef unsigned char UINT8;
 typedef unsigned int  UINT16;
