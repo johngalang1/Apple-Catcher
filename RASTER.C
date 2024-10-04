@@ -92,10 +92,26 @@ void plot_vertical_line(UINT32 *base, int x, int n, int m)
     if(x >= 0 && x < SCREEN_WIDTH)
     {
         for(i = 0; i < m-n; i++)
-        {
+        { 
             *next |= 31 - r;
             next += 20;
         }
     }
-}
+}   
+/* 
 
+
+*/
+void plot_char(UINT16 *base, int x, int y, 
+                const UINT16 *bitmap, unsigned int height)
+{ 
+    UINT16 *next = base + (y * 40) + ( x >> 4); 
+    int i = 0;      
+
+    while(i < height)
+    { 
+        *next = bitmap[i]; 
+        next += 40; 
+        i += 1;
+    } 
+}
