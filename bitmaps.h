@@ -779,8 +779,7 @@ UINT16 letterJ_bitmap[32] =
     0x0000,  
     0x0000,  
     0x0000,  
-    0x0000,  
-    0x0000  
+    0x0000
 };
 
 UINT16 letterK_bitmap[32] = 
