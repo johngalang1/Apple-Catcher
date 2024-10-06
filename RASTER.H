@@ -22,7 +22,9 @@ void plot_apple_32(UINT32 *base, int x, int y,
 
 void clear_screen(UINT32 *base);
 
-void plot_vertical_line(UINT32 *base, int x, int n, int m);
+void plot_vertical_line(UINT16 *base, int x, int n, int m);
+
+void plot_pixel(UINT16 *base, int x, int y);
 
 void plot_char(UINT16 *base, int x, int y, 
                     const UINT16 *bitmap, unsigned int height);
