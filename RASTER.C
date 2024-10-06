@@ -84,21 +84,27 @@ void clear_screen(UINT32 *base)
  DETAILS: plots a 1-pixel thick vertical line at an x value (where 0 <= X < SCREEN_WIDTH),
             starts at y = n and ends at y = m.
  */
-void plot_vertical_line(UINT32 *base, int x, int n, int m)
+void plot_vertical_line(UINT16 *base, int x, int n, int m)
 {
-    UINT32 *next = base + (n * 20) + (x >> 5);
-    int r = x && 31;
     int i;
-    if(x >= 0 && x < SCREEN_WIDTH)
+    int dif = m-n;
+    for(i = 0; i <dif; i++)
     {
-        for(i = 0; i < m-n; i++)
-        { 
-            *next |= 31 - r;
-            next += 20;
-        }
+        plot_pixel(base, x, n);
+        n++;
     }
-}   
-/* 
+}
+
+
+NAME: plot_pixel
+PARAMETERS: UINT16 *base (framebuffer), int x (x axis), int y (y axis)
+purpose: used to plot an individual pixel
+
+void plot_pixel(UINT16 *base, int x, int y)
+{
+    *(base + y * 40 + (x >> 4)) |= 1 << (15 - (x & 15));
+}
+
 
 
 */
