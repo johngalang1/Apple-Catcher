@@ -1,5 +1,7 @@
 #ifndef BITMAPS_H
 #define BITMAPS_H
+#include <TYPES.H>
+
 /* 
 AUTHORS: John G, Zach L
 FILE NAME: bitmaps.h
