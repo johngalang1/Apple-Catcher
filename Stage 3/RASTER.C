@@ -149,3 +149,17 @@ void clear_apple(UINT32 *base, int x, int y, unsigned int width, unsigned int he
         next += 20;  
     }
 }
+
+/* Clear the area occupied by a char */
+void clear_char(UINT16 *base, int x, int y, unsigned int height)
+{
+    UINT16 *next = base + (y * 40) + (x >> 4);
+    int i = 0;
+    while (i < height)
+    {
+        next[0] = 0x0000;
+        next += 40;
+        i++;
+    }
+}
+
