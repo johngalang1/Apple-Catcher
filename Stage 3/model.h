@@ -21,7 +21,6 @@ typedef struct
 typedef struct {
     const UINT16 digit1_x, digit1_y;   /* Fixed position for digit 1 */
     const UINT16 digit2_x, digit2_y;   /* Fixed position for digit 2 */
-    UINT16 width;               
     UINT32 height;                     
     int value;                         /* Score value (integer < 60) */
 } score;
