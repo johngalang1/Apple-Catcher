@@ -19,8 +19,8 @@ typedef struct
 } basket; 
 
 typedef struct {
-    const UINT16 digit1_x, digit1_y;   /* Fixed position for digit 1 */
-    const UINT16 digit2_x, digit2_y;   /* Fixed position for digit 2 */
+    UINT16 digit1_x, digit1_y;   /* Fixed position for digit 1 */
+    UINT16 digit2_x, digit2_y;   /* Fixed position for digit 2 */
     UINT32 height;                     
     int value;                         /* Score value (integer < 60) */
 } score;
@@ -61,7 +61,9 @@ int check_apple_collision(basket *b, apple *a);
 void reset_apple(apple *a);
 
 /* Score Functions */
-void update_score(score *s);
+vscore init_score();
+void increment_score(UINT16 *base, score curr_score);
+void update_score(UINT16 *base, score curr_score);
 
 /* Timer Functions */
 void decrement_timer(timer_round *t);
