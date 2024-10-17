@@ -29,4 +29,6 @@ void clear_basket(UINT32 *base, int x, int y,
 void clear_apple(UINT32 *base, int x, int y, 
                         unsigned int width, unsigned int height);
 
+void clear_char(UINT16 *base, int x, int y, unsigned int height);
+
 #endif
