@@ -12,8 +12,8 @@ void move_basket(basket *b, int direction)
     }
 
     /* Ensure the basket does not move beyond the right boundary */
-    if (b->x > (SCREEN_WIDTH - b->width)) 
+    if (b->x > (SCREEN_WIDTH - 64)) 
     {
-        b->x = SCREEN_WIDTH - b->width;  /* Stop at the right boundary */
+        b->x = SCREEN_WIDTH - 64;  /* Stop at the right boundary */
     }
 }
