@@ -52,6 +52,30 @@ typedef struct {
 } message;
 
 
+/* Functions */
+
+void move_basket(basket *b, int direction);
+void check_basket_collision(basket *b);
+
+/* Apple Functions */
+void move_apple(apple *a);
+int check_apple_collision(basket *b, apple *a);
+void reset_apple(apple *a);
+
+/* Score Functions */
+void update_score(score *s);
+
+/* Timer Functions */
+void decrement_timer(timer_round *t);
+int is_time_up(timer_round *t);
+
+void decrement_start_timer(timer_start *t);
+int is_start_time_up(timer_start *t);
+
+/* Message Functions */ 
+void display_message(message *msg);
+void clear_message(message *msg);
+
 
 
 #endif
