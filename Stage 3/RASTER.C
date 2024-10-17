@@ -54,7 +54,7 @@ void plot_basket_64(UINT32 *base, int x, int y,
     UINT32 *next;
     
     for (i = 0; i < height; i++) {
-        next = base + (y + i) * (SCREEN_WIDTH >> 5) + (x >> 5);
+        next = base + (y + i) * (20) + (x >> 5);
         *next = bitmap[i][0];
         *(next + 1) = bitmap[i][1];
     }
@@ -118,4 +118,34 @@ void plot_char(UINT16 *base, int x, int y,
         next += 40; 
         i += 1;
     } 
+}
+
+/* Clear the area occupied by the basket */
+void clear_basket(UINT32 *base, int x, int y, unsigned int width, unsigned int height)
+{
+    UINT32 *next = base + (y * 20) + (x >> 5);
+    int i;
+
+    for (i = 0; i < height; i++)
+    {
+        next[0] = 0x00000000;  
+        if (width > 32)
+        {
+            next[1] = 0x00000000;  
+        }
+        next += 20;  
+    }
+}
+
+/* Clear the area occupied by the apple */
+void clear_apple(UINT32 *base, int x, int y, unsigned int width, unsigned int height)
+{
+    UINT32 *next = base + (y * 20) + (x >> 5);
+    int i;
+
+    for (i = 0; i < height; i++)
+    {
+        next[0] = 0x00000000;  
+        next += 20;  
+    }
 }
