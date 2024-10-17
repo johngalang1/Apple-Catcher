@@ -9,6 +9,8 @@ int main()
 	plot_apple_32(FB32, 400, 100, apple_bitmap, APPLE_HEIGHT); 
 	plot_basket_64(FB32, 400, 150, basket_bitmap, BASKET_HEIGHT);
 	plot_char(FB16, 200, 200, letterA_bitmap, CHARACTER_HEIGHT);
+	clear_basket(FB32, 400, 150, BASKET_WIDTH, BASKET_HEIGHT ); 
+	clear_apple(FB32, 400, 100, APPLE_WIDTH, APPLE_HEIGHT ); 
 
 	return 0;
 }
