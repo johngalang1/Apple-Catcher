@@ -8,7 +8,9 @@ PURPOSE: Contains all defined data types and constants for the program
 #define SCREEN_HEIGHT 400 
 #define SCREEN_WIDTH 640
 #define BASKET_HEIGHT 16
+#define BASKET_WIDTH 64
 #define APPLE_HEIGHT 32
+#define APPLE_WIDTH 32
 #define CHARACTER_HEIGHT 32
 
 
