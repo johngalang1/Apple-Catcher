@@ -62,9 +62,9 @@ int check_apple_collision(basket *b, apple *a);
 void reset_apple(apple *a);
 
 /* Score Functions */
-vscore init_score();
-void increment_score(UINT16 *base, score curr_score);
-void update_score(UINT16 *base, score curr_score);
+score *init_score();
+void increment_score(UINT16 *base, score *curr_score);
+void update_score(UINT16 *base, score *curr_score);
 
 /* Timer Functions */
 void decrement_timer(timer_round *t);
