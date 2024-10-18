@@ -29,10 +29,8 @@ typedef struct {
 typedef struct {
     UINT16 digit1_x, digit1_y;         /* Fixed position for digit 1 */
     UINT16 digit2_x, digit2_y;         /* Fixed position for digit 2 */
-    UINT16 width;               
     UINT32 height;              
     int value;                         /* Timer value (integer <= 60) */
-    const UINT16 *digit_bitmaps[10];   /* Array of bitmaps for digits 0-9 */
 } timer_round;
 
 typedef struct {
@@ -67,8 +65,9 @@ void increment_score(UINT16 *base, score *curr_score);
 void update_score(UINT16 *base, score *curr_score);
 
 /* Timer Functions */
-void decrement_timer(timer_round *t);
-int is_time_up(timer_round *t);
+timer_round *init_round_timer();
+void decrement_round_timer(UINT16 *base, timer_round *t);
+void update_round_timer(UINT16 *base, timer_round *t);
 
 void decrement_start_timer(timer_start *t);
 int is_start_time_up(timer_start *t);
