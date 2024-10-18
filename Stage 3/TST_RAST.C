@@ -12,9 +12,9 @@ int main()
     timer_round *round_timer = init_round_timer();
     int direction = 1;  /* Start by moving to the right */
     basket player_basket = {300, 150, 8, 64, 16, basket_bitmap};  /* Initial basket position */
+	clear_screen(FB32);
 	update_score(FB16, new_score);
     update_round_timer(FB16, round_timer);
-	clear_screen(FB32);
 	Cnecin();
     while (round_timer->value > 0)
     {
