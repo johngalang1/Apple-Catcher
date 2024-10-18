@@ -16,6 +16,7 @@ typedef struct
     int delta_x;        /*Horizontal displacement per clock tick*/
     UINT32 width;
     UINT32 height;
+    UINT32 (*bitmap)[2]; /* Pointer to the basket bitmap */
 } basket; 
 
 typedef struct {
