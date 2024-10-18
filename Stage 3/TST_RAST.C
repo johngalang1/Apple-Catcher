@@ -15,7 +15,7 @@ int main()
 	update_score(FB16, new_score);
     update_round_timer(FB16, round_timer);
 	clear_screen(FB32);
-
+	Cnecin();
     while (round_timer->value > 0)
     {
         /* Clear the previous position of the basket */
