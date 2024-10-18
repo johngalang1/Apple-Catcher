@@ -1,16 +1,49 @@
 #include <osbind.h>
+#include <stdio.h>
 #include "raster.h"
 #include "bitmaps.h"
+#include "model.h"
 
 int main()
 {
-	UINT32 *FB32 = Physbase();  
+    UINT32 *FB32 = Physbase();  
 	UINT16 *FB16 = Physbase();
-	plot_apple_32(FB32, 400, 100, apple_bitmap, APPLE_HEIGHT); 
-	plot_basket_64(FB32, 400, 150, basket_bitmap, BASKET_HEIGHT);
-	plot_char(FB16, 200, 200, letterA_bitmap, CHARACTER_HEIGHT);
-	clear_basket(FB32, 400, 150, BASKET_WIDTH, BASKET_HEIGHT ); 
-	clear_apple(FB32, 400, 100, APPLE_WIDTH, APPLE_HEIGHT ); 
+	score *new_score = init_score();
+    timer_round *round_timer = init_round_timer();
+    int direction = 1;  /* Start by moving to the right */
+    basket player_basket = {300, 150, 8, 64, 16, basket_bitmap};  /* Initial basket position */
+	update_score(FB16, new_score);
+    update_round_timer(FB16, round_timer);
+	clear_screen(FB32);
 
-	return 0;
+    while (round_timer->value > 0)
+    {
+        /* Clear the previous position of the basket */
+        clear_basket(FB32, player_basket.x, player_basket.y, player_basket.width, player_basket.height);
+
+        /* Move the basket */
+        move_basket(&player_basket, direction);
+
+        /* Plot the basket at the new position */
+        plot_basket_64(FB32, player_basket.x, player_basket.y, player_basket.bitmap, player_basket.height);
+
+        /* Check for boundaries and change direction if necessary */
+        if (player_basket.x == 0)  /* Hit left boundary */
+        {
+            direction = 1;  /* Start moving right */
+			increment_score(FB16, new_score);
+            decrement_round_timer(FB16, round_timer);
+        }
+        else if (player_basket.x == (SCREEN_WIDTH - player_basket.width))  /* Hit right boundary */
+        {
+            direction = -1;  /* Start moving left */
+			increment_score(FB16, new_score);
+            decrement_round_timer(FB16, round_timer);
+        }
+
+        /* Delay for visualization (e.g., 1/70th of a second) */
+        Vsync();  
+    }
+
+    return 0;
 }
