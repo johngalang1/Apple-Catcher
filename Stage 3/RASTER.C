@@ -163,3 +163,24 @@ void clear_char(UINT16 *base, int x, int y, unsigned int height)
     }
 }
 
+/* plots the left border of the play area */
+
+void plot_left_border(UINT32 *base, UINT32 *bitmap[400][4])
+{
+    int y = 0;
+    int i = 0;
+    int j;
+    UINT32 *next;
+    while(i < 400)
+    {
+        j = 0;
+        next = base + (y * 20); /* only need y because x will always start at 0 */
+        while(j < 4)
+        {
+            *(next + j) = bitmap[i][j];
+            j++;
+        }
+        y += 1;
+        i++;
+    }
+}
