@@ -31,4 +31,6 @@ void clear_apple(UINT32 *base, int x, int y,
 
 void clear_char(UINT16 *base, int x, int y, unsigned int height);
 
+void plot_left_border(UINT32 *base, UINT32 *bitmap[400][4]);
+
 #endif
