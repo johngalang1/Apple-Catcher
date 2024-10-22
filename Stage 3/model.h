@@ -1,5 +1,5 @@
-#ifndef model.h
-#define model.h
+#ifndef MODEL_H
+#define MODEL_H
 #define NUM_LETTERS 20
 #include "types.h"
 #include "bitmaps.h"
