@@ -3,7 +3,7 @@
 /* 
 AUTHORS: John G, Zach L 
 FILE NAME: TYPES.H 
-PURPOSE: Contains all defined data types and constants for the program
+PURPOSE: CONTAINS ALL DEFINED DATATYPES AND CONSTANTS
 */
 #define SCREEN_HEIGHT 400 
 #define SCREEN_WIDTH 640
