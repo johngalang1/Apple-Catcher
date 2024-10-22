@@ -2,16 +2,16 @@
 /* 
 AUTHORS: John G, Zach L
 FILE NAME: RASTER.C
-PURPOSE: CONTAINS ALL DEVELOPED FUNCTIONS
+PURPOSE: CONTAINS FUNCTIONS FOR PLOTING OR CLEARING IMAGES/PIXELS TO THE SCREEN
 */
 
 /* 
 NAME: plot_basket_32
-PARAMETERS: *base (framebuffer), 
-            x position of the screen, 
-            y position of the screen, 
-            bitmap of apple, 
-            height of apple
+PARAMETERS: UINT32 *base - framebuffer, 
+            int x - horizontal position of the screen, 
+            int y - vertical position of the screen,
+            const UINT32 *bitmap - bitmap of apple, 
+            unsigned int height - height of apple
 PURPOSE: To plot an apple onto the screen 
 DETAILS: Calculates the starting memory address in the framebuffer to the given 
     x,y coordinates. Each row consists of 20, 32 pixel blocks. 
@@ -34,18 +34,18 @@ void plot_apple_32(UINT32 *base, int x, int y,
 } 
 /* 
 NAME: plot_basket_64
-PARAMETERS: *base (framebuffer), 
-            x position of the screen, 
-            y position of the screen, 
-            bitmap of basket, 
-            height of basket 
+PARAMETERS: *base - framebuffer, 
+            int x - horizontal position of the screen, 
+            int y - vertical position of the screen, 
+            const UINT32 *bitmap - bitmap of basket, 
+            unsigned int height - height of basket 
 PURPOSE: To plot the basket onto the screen 
 DETAILS:  Calculates the starting memory address in the framebuffer to the given 
     x, y coordinates. Since each row of the screen is 640 pixels wide, the function adjusts the pointer 
-    by dividing the screen width by 32 (as each `UINT32` holds 32 pixels). The basket bitmap is 64 pixels 
-    wide, so each row consists of two `UINT32` values, stored in `bitmap[i][0]` and `bitmap[i][1]`. 
-    The function iterates through each row of the bitmap, writing both parts of the row to the framebuffer. 
-    After plotting each row, it advances to the next line on the screen and continues the process until all rows are plotted.
+    by dividing the screen width by 32. The basket bitmap is 64 pixels wide, so each row consists of 
+    two `UINT32` values, stored in `bitmap[i][0]` and `bitmap[i][1]`. The function iterates through each row of the 
+    bitmap, writing both parts of the row to the framebuffer. After plotting each row, it advances to the next line on the 
+    screen and continues the process until all rows are plotted.
 */
 void plot_basket_64(UINT32 *base, int x, int y, 
                     const UINT32 *bitmap[BASKET_HEIGHT][2], unsigned int height)
@@ -61,10 +61,10 @@ void plot_basket_64(UINT32 *base, int x, int y,
 }
 /* 
 NAME: clear_screen
-PARAMETERS: *base (framebuffer)
+PARAMETERS: *base - framebuffer
 PURPOSE: To clear the screen of any pixels that are currently existing
 DETAILS: Fills every 32 bits with 0's for a total of 8000 iterations, since 
-        (640 * 400) / 32 = 8000, effectively clearing the entire screen
+        (640 * 400) / 32 = 8000, effectively clearing the entire screen.
 */
 void clear_screen(UINT32 *base)
 { 
@@ -79,9 +79,12 @@ void clear_screen(UINT32 *base)
 
 /*
  NAME: plot_vertical_line
- PARAMETERS: *base (framebuffer), int x (x location to be plotted), int n(y value to start), int m(y value to stop)
- PURPOSE: to plot a vertical line 1-pixel thick on the screen
- DETAILS: plots a 1-pixel thick vertical line at an x value (where 0 <= X < SCREEN_WIDTH),
+ PARAMETERS: *base - framebuffer 
+             int x - horizontal position of the screen,
+             int n - y value to start, 
+             int m - y value to stop
+ PURPOSE: To plot a vertical line 1-pixel thick on the screen
+ DETAILS: Plots a 1-pixel thick vertical line at an x value (where 0 <= X < SCREEN_WIDTH),
             starts at y = n and ends at y = m.
  */
 void plot_vertical_line(UINT16 *base, int x, int n, int m)
@@ -97,15 +100,32 @@ void plot_vertical_line(UINT16 *base, int x, int n, int m)
 
 /*
 NAME: plot_pixel
-PARAMETERS: UINT16 *base (framebuffer), int x (x axis), int y (y axis)
-purpose: used to plot an individual pixel
+PARAMETERS: UINT16 *base - framebuffer 
+            int x - horizontal position of the screen,
+            int y - vertical position of the screen
+PURPOSE: Plots an individual pixel on the screen 
+DETAILS: The expression (1 << (15 - (x & 15))) is used to calculate which bit 
+         to set within the word, ensuring the correct pixel is modified.
 */
 void plot_pixel(UINT16 *base, int x, int y)
 {
     *(base + y * 40 + (x >> 4)) |= 1 << (15 - (x & 15));
 }
 
-
+/*
+NAME: plot_char
+PARAMETERS: UINT16 *base - framebuffer
+            int x - horizontal position of the screen,
+            int y - vertical position of the screen,
+            const UINT16 *bitmap - bitmap of character,
+            unsigned int height - height of character
+PURPOSE: Plots a character bitmap on the screen at the specified (x, y) coordinates.
+DETAILS: Calculates the starting memory address in the framebuffer to the given 
+    x,y coordinates. Each row consists of 40, 16 pixel blocks. 
+    The function then iterates over each row of the bitmap and writes it to the 
+    correct position in the framebuffer. After plotting each row, the function 
+    advances the framebuffer pointer by 40 to move down to the next screen row.
+*/
 void plot_char(UINT16 *base, int x, int y, 
                 const UINT16 *bitmap, unsigned int height)
 { 
@@ -120,7 +140,19 @@ void plot_char(UINT16 *base, int x, int y,
     } 
 }
 
-/* Clear the area occupied by the basket */
+/*
+NAME: clear_basket
+PARAMETERS: UINT32 *base - framebuffer
+            int x - horizontal screen position,
+            int y - vertical screen position,
+            unsigned int width - width of the basket,
+            unsigned int height - height of the basket
+PURPOSE: Clears the area occupied by the basket
+DETAILS: Calculates the starting address in the framebuffer using (x, y). Each row consists 
+    of 20 blocks of 32 pixels. The function clears the bitmap array based on the basket's width. 
+    After clearing a row, the pointer advances by 20 to move to the next row.
+*/
+
 void clear_basket(UINT32 *base, int x, int y, unsigned int width, unsigned int height)
 {
     UINT32 *next = base + (y * 20) + (x >> 5);
@@ -137,7 +169,19 @@ void clear_basket(UINT32 *base, int x, int y, unsigned int width, unsigned int h
     }
 }
 
-/* Clear the area occupied by the apple */
+/*
+NAME: clear_apple
+PARAMETERS: UINT32 *base - framebuffer,
+            int x - horizontal screen position,
+            int y - vertical screen position,
+            unsigned int width - width of the apple,
+            unsigned int height - height of the apple
+PURPOSE: Clears the area occupied by the apple
+DETAILS: Calculates the starting address in the framebuffer using (x, y). Each row consists 
+        of 20 blocks of 32 pixels. The function clears one 32-bit longword for each row. After 
+        clearing a row, the pointer advances by 20 to move to the next row.
+*/
+
 void clear_apple(UINT32 *base, int x, int y, unsigned int width, unsigned int height)
 {
     UINT32 *next = base + (y * 20) + (x >> 5);
@@ -150,7 +194,17 @@ void clear_apple(UINT32 *base, int x, int y, unsigned int width, unsigned int he
     }
 }
 
-/* Clear the area occupied by a char */
+/*
+NAME: clear_char
+PARAMETERS: UINT16 *base - framebuffer,
+            int x - horizontal screen position,
+            int y - vertical screen position,
+            unsigned int height - height of the character
+PURPOSE: Clears the area occupied by a character
+DETAILS: Calculates the starting address in the framebuffer using (x, y). Each row contains 
+    40 blocks of 16 pixels. The function clears one 16-bit word for each row. After 
+    clearing a row, the pointer advances by 40 to move to the next row.
+*/
 void clear_char(UINT16 *base, int x, int y, unsigned int height)
 {
     UINT16 *next = base + (y * 40) + (x >> 4);
@@ -159,28 +213,6 @@ void clear_char(UINT16 *base, int x, int y, unsigned int height)
     {
         next[0] = 0x0000;
         next += 40;
-        i++;
-    }
-}
-
-/* plots the left border of the play area */
-
-void plot_left_border(UINT32 *base, UINT32 *bitmap[400][4])
-{
-    int y = 0;
-    int i = 0;
-    int j;
-    UINT32 *next;
-    while(i < 400)
-    {
-        j = 0;
-        next = base + (y * 20); /* only need y because x will always start at 0 */
-        while(j < 4)
-        {
-            *(next + j) = bitmap[i][j];
-            j++;
-        }
-        y += 1;
         i++;
     }
 }
