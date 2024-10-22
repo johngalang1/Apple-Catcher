@@ -1,5 +1,17 @@
 #include "model.h"
 
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: model.h
+PURPOSE: CONTAINS FUNCTIONS FOR OBJECT BEHAVIOURS FOR THE GAME
+*/
+
+/* 
+NAME: 
+PARAMETERS: 
+PURPOSE: 
+DETAILS:
+*/
 void move_basket(basket *b, int direction)
 {
     /* Update the basket's horizontal position based on direction */
