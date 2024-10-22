@@ -3,7 +3,13 @@
 #define NUM_LETTERS 20
 #include "types.h"
 #include "bitmaps.h"
-#include "RASTER.H"
+#include "RASTER.H" 
+
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: model.h
+PURPOSE: CONTAINS ALL OBJECTS AND BEHAVIOR FUNCTION PROTOTYPES FOR THE GAME
+*/
 
 typedef struct 
 {
