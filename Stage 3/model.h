@@ -2,6 +2,8 @@
 #define model.h
 #define NUM_LETTERS 20
 #include "types.h"
+#include "bitmaps.h"
+#include "RASTER.H"
 
 typedef struct 
 {
