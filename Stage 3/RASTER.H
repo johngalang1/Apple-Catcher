@@ -6,7 +6,7 @@
 /* 
 AUTHORS: John G, Zach L
 FILE NAME: RASTER.H 
-PURPOSE: CONTAINS ALL FUNCTION HEADERS USED FOR THE PROGRAM
+PURPOSE: CONTAINS FUNCTION PROTOTYPES FOR CLEARING OR PLOTING IMAGES/PIXELS ONTO THE SCREEN
 */
 void plot_basket_64(UINT32 *base, int x, int y, 
                         const UINT32 *bitmap[BASKET_HEIGHT][2], unsigned int height); 
@@ -30,7 +30,5 @@ void clear_apple(UINT32 *base, int x, int y,
                         unsigned int width, unsigned int height);
 
 void clear_char(UINT16 *base, int x, int y, unsigned int height);
-
-void plot_left_border(UINT32 *base, UINT32 *bitmap[400][4]);
 
 #endif
