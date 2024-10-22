@@ -5,8 +5,7 @@
 /* 
 AUTHORS: John G, Zach L
 FILE NAME: bitmaps.h
-PURPOSE: Contains all bitmaps for the game
-SOURCE FOR ALL CHARACTERS: https://github.com/idispatch/raster-fonts/blob/master/font-16x32.c
+PURPOSE: CONTAINS ALL DECLARATIONS OF BITMAPS
 */ 
 
 extern UINT32 apple_bitmap[APPLE_HEIGHT];
