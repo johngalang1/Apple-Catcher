@@ -1,5 +1,12 @@
 #include "bitmaps.h"
 
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: bitmaps.c
+PURPOSE: CONTAINS ALL BITMAPS
+SOURCE FOR ALL CHARACTERS: https://github.com/idispatch/raster-fonts/blob/master/font-16x32.c
+*/
+
 UINT32 apple_bitmap[APPLE_HEIGHT] = 
 {
   0x00018000, 
