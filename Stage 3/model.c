@@ -44,14 +44,6 @@ score *init_score()
     return &game_score;
 }
 
-void increment_score(UINT16 *base, score *curr_score)
-{
- 
-    curr_score->value += 1;
-    update_score(base, curr_score);
-}
-
-
 /* round timer functions */
 
 timer_round *init_round_timer()
