@@ -3,6 +3,7 @@
 #include "raster.h"
 #include "bitmaps.h"
 #include "model.h"
+#include "events.h"
 
 int main()
 {
