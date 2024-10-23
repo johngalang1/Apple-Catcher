@@ -13,7 +13,15 @@ int main()
     timer_round *round_timer = init_round_timer();
     int direction = 1;  /* Start by moving to the right */
     basket player_basket = {300, 150, 8, 64, 16, basket_bitmap};  /* Initial basket position */
-	clear_screen(FB32);
+    /* Define the left and right borders 128 pixels away from the screen edges */
+    int left_border = 127;
+    int right_border = SCREEN_WIDTH - 128 - player_basket.width;
+
+    clear_screen(FB32);
+    
+    /* Plot vertical lines 128 pixels from the left and right borders */
+    plot_vertical_line(FB16, left_border, 0, SCREEN_HEIGHT);  /* Left border */
+    plot_vertical_line(FB16, SCREEN_WIDTH - 128, 0, SCREEN_HEIGHT);  /* Right border */
 	update_score(FB16, new_score);
     update_round_timer(FB16, round_timer);
 	Cnecin();
@@ -29,16 +37,17 @@ int main()
         plot_basket_64(FB32, player_basket.x, player_basket.y, player_basket.bitmap, player_basket.height);
 
         /* Check for boundaries and change direction if necessary */
-        if (player_basket.x == 0)  /* Hit left boundary */
+        if (player_basket.x <= left_border + 32)  /* Adjust for basket width */
         {
             direction = 1;  /* Start moving right */
-			increment_score(FB16, new_score);
+            increment_score(FB16, new_score);
             decrement_round_timer(FB16, round_timer);
         }
-        else if (player_basket.x == (SCREEN_WIDTH - player_basket.width))  /* Hit right boundary */
+        else if (player_basket.x >= right_border)  /* Hit right border */
         {
+            player_basket.x = right_border;  /* Prevent overlap */
             direction = -1;  /* Start moving left */
-			increment_score(FB16, new_score);
+            increment_score(FB16, new_score);
             decrement_round_timer(FB16, round_timer);
         }
 
