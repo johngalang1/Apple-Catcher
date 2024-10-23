@@ -1,7 +1,7 @@
-test: tst_rast.o raster.o model.o bitmaps.o  
-	cc68x -g tst_rast.o raster.o model.o bitmaps.o -o test  
+test: tst_rast.o raster.o model.o bitmaps.o events.o  
+	cc68x -g tst_rast.o raster.o model.o bitmaps.o events.o -o test  
 
-tst_rast.o: tst_rast.c raster.h types.h bitmaps.h model.h  
+tst_rast.o: tst_rast.c raster.h types.h bitmaps.h model.h events.h
 	cc68x -g -c tst_rast.c
 
 raster.o: raster.c raster.h
@@ -13,5 +13,8 @@ model.o: model.c model.h
 bitmaps.o: bitmaps.c bitmaps.h types.h
 	cc68x -g -c bitmaps.c  
 
+events.o: events.c events.h
+	cc68x -g -c events.c  
+
 clean:
-	$(RM) *.o test
+	$(RM) *.o test  
