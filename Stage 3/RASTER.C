@@ -6,9 +6,9 @@ PURPOSE: CONTAINS FUNCTIONS FOR PLOTING OR CLEARING IMAGES/PIXELS TO THE SCREEN
 */
 
 /* 
-NAME: plot_basket_32
+NAME: plot_apple_32
 PARAMETERS: UINT32 *base - framebuffer, 
-            int x - horizontal position of the screen, 
+            UINT16 x - horizontal position of the screen, 
             int y - vertical position of the screen,
             const UINT32 *bitmap - bitmap of apple, 
             unsigned int height - height of apple
@@ -18,6 +18,8 @@ DETAILS: Calculates the starting memory address in the framebuffer to the given
     The function then iterates over each row of the bitmap and writes it to the 
     correct position in the framebuffer. After plotting each row, the function 
     advances the framebuffer pointer by 20 to move down to the next screen row.
+    The function only plots pixels that are within screen bounds meaning apples
+    "move" onto the screen from negative y values and off the screen for y values > 400.
 */
 void plot_apple_32(UINT32 *base, UINT16 x, int y,
                     const UINT32 *bitmap, unsigned int height)   
