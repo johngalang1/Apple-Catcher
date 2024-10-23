@@ -11,7 +11,7 @@ int main()
     score *new_score = init_score();
     timer_round *round_timer = init_round_timer();
     int direction = 1;  /* Start by moving to the right */
-    basket player_basket = {300, 150, 8, 64, 16, basket_bitmap};  /* Initial basket position */
+    basket player_basket = {300, 300, 8, 64, 16, basket_bitmap};  /* Initial basket position */
     
     clear_screen(FB32);
     
