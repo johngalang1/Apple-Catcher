@@ -65,13 +65,6 @@ timer_round *init_round_timer()
         t.value = 60; 
     return &t;
 }
-
-void decrement_round_timer(UINT16 *base, timer_round *t)
-{
-    t->value -= 1;
-    update_round_timer(base, t);
-}
-
 /* apple functions */
 apple *generate_apple(UINT16 col)
 {
