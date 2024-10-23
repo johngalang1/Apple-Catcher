@@ -67,7 +67,7 @@ typedef struct {
 void move_basket(basket *b, int direction);
 
 /* Apple Functions */
-apple generate_apple(UINT16 col);
+void generate_apple(UINT16 col);
 void move_apple(UINT32 *base, apple *this_apple);
 
 /* Score Functions */
