@@ -11,7 +11,7 @@ PURPOSE: CONTAINS FUNCTION PROTOTYPES FOR CLEARING OR PLOTING IMAGES/PIXELS ONTO
 void plot_basket_64(UINT32 *base, int x, int y, 
                         const UINT32 *bitmap[BASKET_HEIGHT][2], unsigned int height); 
 
-void plot_apple_32(UINT32 *base, int x, int y, 
+void plot_apple_32(UINT32 *base, UINT16 x, int y, 
                         const UINT32 *bitmap, unsigned int height);
 
 void clear_screen(UINT32 *base);
