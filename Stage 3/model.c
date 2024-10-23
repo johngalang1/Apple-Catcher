@@ -70,3 +70,21 @@ void decrement_round_timer(UINT16 *base, timer_round *t)
     t->value -= 1;
     update_round_timer(base, t);
 }
+
+/* apple functions */
+apple *generate_apple(UINT16 col)
+{
+    static apple A;
+        A.y = 0;
+        A.x = (col * 32) + 128;
+        A.height = APPLE_HEIGHT;
+        A.width = APPLE_WIDTH;
+    return &A;
+}
+
+void move_apple(UINT32 *base, apple *this_apple)
+{
+    clear_apple(base, this_apple->x, this_apple->y, APPLE_WIDTH, APPLE_HEIGHT);
+    this_apple->y += 2;
+    plot_apple_32(base, this_apple->x, this_apple->y, apple_bitmap, APPLE_HEIGHT);
+}
