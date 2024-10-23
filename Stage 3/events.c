@@ -13,6 +13,12 @@ void update_score(UINT16 *base, score *curr_score)
     plot_char(base, curr_score->digit2_x, curr_score->digit2_y, num_maps[digit_2], CHARACTER_HEIGHT);
 }
 
+void increment_score(UINT16 *base, score *curr_score)
+{ 
+    curr_score->value += 1;
+    update_score(base, curr_score);
+}
+
 void update_round_timer(UINT16 *base, timer_round *t)
 {
     int digit_1, digit_2;   /* digit 1 is ones digit, digit 2 is tens digit */
