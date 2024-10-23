@@ -24,4 +24,9 @@ void update_round_timer(UINT16 *base, timer_round *t)
     clear_char(base, t->digit2_x, t->digit2_y, CHARACTER_HEIGHT);
     plot_char(base, t->digit2_x, t->digit2_y, num_maps[digit_2], CHARACTER_HEIGHT);
 }
+void decrement_round_timer(UINT16 *base, timer_round *t)
+{
+    t->value -= 1;
+    update_round_timer(base, t);
+}
 
