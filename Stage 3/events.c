@@ -1,4 +1,7 @@
+#include <stddef.h>  
+#include <osbind.h>  
 #include "events.h"
+#include "raster.h"
 
 
 void update_score(UINT16 *base, score *curr_score)
