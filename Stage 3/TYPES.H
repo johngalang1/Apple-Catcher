@@ -13,6 +13,8 @@ PURPOSE: CONTAINS ALL DEFINED DATATYPES AND CONSTANTS
 #define APPLE_WIDTH 32
 #define CHARACTER_HEIGHT 32
 #define NUM_APPLES 5 /* only set to 5 for testing, could be 2 or 3 for final */
+#define LEFT_BORDER 127
+#define RIGHT_BORDER SCREEN_WIDTH - 128
 
 
 typedef unsigned char UINT8;
