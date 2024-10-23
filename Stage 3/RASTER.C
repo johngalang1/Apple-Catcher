@@ -47,7 +47,7 @@ NAME: plot_basket_64
 PARAMETERS: *base - framebuffer, 
             int x - horizontal position of the screen, 
             int y - vertical position of the screen, 
-            const UINT32 *bitmap - bitmap of basket, 
+            const UINT32 bitmap - bitmap of basket, 
             unsigned int height - height of basket 
 PURPOSE: To plot the basket onto the screen 
 DETAILS:  Calculates the starting memory address in the framebuffer to the given 
@@ -58,7 +58,7 @@ DETAILS:  Calculates the starting memory address in the framebuffer to the given
     screen and continues the process until all rows are plotted.
 */
 void plot_basket_64(UINT32 *base, int x, int y, 
-                    const UINT32 *bitmap[BASKET_HEIGHT][2], unsigned int height)
+                    const UINT32 bitmap[BASKET_HEIGHT][2], unsigned int height)
 { 
     int i;
     UINT32 *next;
