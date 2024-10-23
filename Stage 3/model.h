@@ -77,4 +77,4 @@ void decrement_round_timer(UINT16 *base, timer_round *t);
 void decrement_start_timer(timer_start *t);
 
 
-#endif;
+#endif
