@@ -70,6 +70,7 @@ void move_apple(UINT32 *base, apple *this_apple);
 /* Score Functions */
 score *init_score();
 void increment_score(UINT16 *base, score *curr_score);
+void update_score(UINT16 *base, score *curr_score);
 
 /* Timer Functions */
 timer_round *init_round_timer();
