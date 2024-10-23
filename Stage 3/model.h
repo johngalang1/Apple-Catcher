@@ -13,10 +13,11 @@ PURPOSE: CONTAINS ALL OBJECTS AND BEHAVIOR FUNCTION PROTOTYPES FOR THE GAME
 
 typedef struct 
 {
-    UINT16 x, y;        /*Position of Apple*/
+    UINT16 x;        /* x Position of Apple */
+    int y;           /* int instead to allow apples to start off screen move onto it */
     UINT32 width;       
     UINT32 height;
-} apple;
+}apple;
 
 typedef struct
 { 
