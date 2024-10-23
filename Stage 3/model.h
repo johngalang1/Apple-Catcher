@@ -19,6 +19,9 @@ typedef struct
     UINT32 height;
 }apple;
 
+/* array of apple objects */
+extern apple apples[NUM_APPLES]; 
+
 typedef struct
 { 
     UINT16 x, y;        /*Position of Basket*/
@@ -64,7 +67,7 @@ typedef struct {
 void move_basket(basket *b, int direction);
 
 /* Apple Functions */
-apple *generate_apple(UINT16 col);
+apple generate_apple(UINT16 col);
 void move_apple(UINT32 *base, apple *this_apple);
 
 /* Score Functions */
