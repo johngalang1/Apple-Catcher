@@ -39,6 +39,21 @@ void decrement_round_timer(UINT16 *base, timer_round *t)
     update_round_timer(base, t);
 }
 
+/* apple functions */
+int check_apple_collision(basket *b, apple *a)
+{
+    int caught = 0;
+    if(b->x - a->x < 16 || a->x - b->x < 80)
+    {
+        caught = 1;
+    }
+    else
+    {
+        caught = -1;
+    }
+    return caught;
+}
+
 /* MESSAGE FUNCTIONS */
 /* Function to map a character to its corresponding bitmap */
 const UINT16 *get_bitmap_for_char(char c) {
