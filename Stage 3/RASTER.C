@@ -19,19 +19,27 @@ DETAILS: Calculates the starting memory address in the framebuffer to the given
     correct position in the framebuffer. After plotting each row, the function 
     advances the framebuffer pointer by 20 to move down to the next screen row.
 */
-void plot_apple_32(UINT32 *base, int x, int y, 
-                    const UINT32 *bitmap, unsigned int height)
-{ 
-    UINT32 *next = base + (y * 20) + ( x >> 5); 
-    int i = 0;      
-
-    while(i < height)
-    { 
-        *next = bitmap[i]; 
-        next += 20; 
-        i += 1;
-    } 
-} 
+void plot_apple_32(UINT32 *base, UINT16 x, int y,
+                    const UINT32 *bitmap, unsigned int height)   
+{
+    int i = 0;    /* bitmap index counter */
+    UINT16 k = y; /* track current y position and bounds */
+    UINT32 *next = base + (k * 20) + (x >> 5);
+    /* adjust bitmap index if any part of apple is offscreen */
+    if (y < 0)
+    {
+        i = -y; /* skip the first |y| rows of the bitmap */
+        k = 0;  /* start plotting on the screen */
+        next = base + (k * 20) + (x >> 5); /* recalculate base to screen bounds */
+    }
+    while(i < height && k < SCREEN_HEIGHT)
+    {
+        *next = bitmap[i]; /* plot current row of bitmap */
+        i += 1;            /* increment index counter */
+        k += 1;            /* increment k level to check for bounds */
+        next += 20;        /* increment framebuffer by 1 y level */
+    }
+}
 /* 
 NAME: plot_basket_64
 PARAMETERS: *base - framebuffer, 
