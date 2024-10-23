@@ -61,6 +61,22 @@ timer_round *init_round_timer()
 
 apple apples[NUM_APPLES];
 
+/* 
+NAME: generate_apple
+PARAMETERS: UINT16 col
+PURPOSE: to initialize an apple object to a specific column (x value) 
+        and assign it to an index in the apple array.
+DETAILS: keeps track of how many apples have been created and uses
+        that tracker to assign each new apple to a unique index in 
+        the apple array (no need for return). Each apple's inital y
+        value is -32 which means it will not be on-screen immediately, 
+        this is so that apples will "fall" onto the screen instead of 
+        just appearing at y = 0. (col * 32) + 128 assigns the x value 
+        to plot the apple into one of 12 columns in the play area (0 - 11). 
+EXAMPLE CALL: generate_apple(n) where n represents an integer 0 - 11 for 
+            desired column.
+*/
+
 void generate_apple(UINT16 col)
 {
     static int apple_count = 0;
