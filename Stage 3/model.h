@@ -55,11 +55,11 @@ typedef struct {
 
 
 typedef struct {
-    UINT16 letter_x[NUM_LETTERS];   /* Array of x positions for each letter */
-    UINT16 letter_y[NUM_LETTERS];   /* Array of y positions for each letter */
-    const UINT16 *digit_bitmaps[NUM_LETTERS];  /* Array of bitmaps, one for each character in the message */
+    UINT16 start_x;   /* Starting x position for the message */
+    UINT16 start_y;   /* Starting y position for the message */
+    UINT16 spacing;   /* Spacing between characters */
+    char *text;       /* String representing the message */
 } message;
-
 
 /* Functions */
 
