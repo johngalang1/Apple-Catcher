@@ -64,6 +64,7 @@ typedef struct {
 /* Functions */
 
 /* Basket Function */
+basket *init_basket();
 void move_basket(basket *b, int direction);
 
 /* Apple Functions */
