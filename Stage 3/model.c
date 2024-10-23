@@ -58,14 +58,20 @@ timer_round *init_round_timer()
     return &t;
 }
 /* apple functions */
-apple *generate_apple(UINT16 col)
+
+apple apples[NUM_APPLES];
+
+void generate_apple(UINT16 col)
 {
-    static apple A;
-        A.y = -32;              /* apples start off-screen */
-        A.x = (col * 32) + 128; /* lines the apple into one of 12 columns */
-        A.height = APPLE_HEIGHT;
-        A.width = APPLE_WIDTH;
-    return &A;
+    static int apple_count = 0;
+    apple *A = &apples[apple_count];
+    
+        A->y = -32;              /* apples start off-screen */
+        A->x = (col * 32) + 128; /* lines the apple into one of 12 columns */
+        A->height = APPLE_HEIGHT;
+        A->width = APPLE_WIDTH;
+    
+    apple_count++;
 }
 
 void move_apple(UINT32 *base, apple *this_apple)
