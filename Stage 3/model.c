@@ -75,8 +75,8 @@ void decrement_round_timer(UINT16 *base, timer_round *t)
 apple *generate_apple(UINT16 col)
 {
     static apple A;
-        A.y = 0;
-        A.x = (col * 32) + 128; /* lines the apple up into one of 12 columns */
+        A.y = -32;
+        A.x = (col * 32) + 128; /* lines the apple into one of 12 columns */
         A.height = APPLE_HEIGHT;
         A.width = APPLE_WIDTH;
     return &A;
