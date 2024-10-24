@@ -15,6 +15,7 @@ void update_score(UINT16 *base, score *curr_score);
 void increment_score(UINT16 *base, score *curr_score);
 
 void update_round_timer(UINT16 *base, timer_round *t);
+void decrement_round_timer(UINT16 *base, timer_round *t);
 
 timer_start *init_start_timer();
 void begin_countdown(UINT16 *base, timer_start *t);
