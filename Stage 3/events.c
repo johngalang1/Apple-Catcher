@@ -52,18 +52,14 @@ void decrement_round_timer(UINT16 *base, timer_round *t)
 }
 
 /* apple functions */
-int check_apple_collision(basket *b, apple *a)
+void check_apple_collision(UINT32 *base, basket *b, apple *a, score *game_score)
 {
     int caught = 0;
     if(b->x - a->x < 16 || a->x - b->x < 80)
     {
-        caught = 1;
+        increment_score(base, game_score);
+        reset_apple(base, a);
     }
-    else
-    {
-        caught = -1;
-    }
-    return caught;
 }
 
 /* MESSAGE FUNCTIONS */
