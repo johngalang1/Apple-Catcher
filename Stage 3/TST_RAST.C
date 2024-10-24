@@ -3,16 +3,21 @@
 #include "bitmaps.h"
 #include "model.h"
 #include "events.h"
+#include <stdlib.h>  /* For rand() */
+#include <time.h>    /* For seeding rand() */
 
 int main()
 {
     UINT32 *FB32 = Physbase();  
-    UINT16 *FB16 = (UINT16*) Physbase();  /* Correct this to UINT16* */  
+    UINT16 *FB16 = (UINT16*) Physbase();  
     apple falling_apple = {200, -32, 32, 32};  /* Apple starting above the screen */
     basket player_basket = {200, SCREEN_HEIGHT - 32, 8, 64, 16, basket_bitmap};  /* Basket near the bottom */ 
 
     score *new_score = init_score();
     timer_round *round_timer = init_round_timer();
+    
+    /* Seed the random number generator */
+    srand(time(NULL));
     
     clear_screen(FB32);  /* Clear the screen */
        
@@ -23,7 +28,7 @@ int main()
     update_score(FB16, new_score);
     update_round_timer(FB16, round_timer);
 
-    while (new_score->value < 10)  /* Infinite loop for testing apples falling */
+    while (new_score->value < 10)  /* Game loop */
     {
         /* Clear the previous position of the apple and basket */
         clear_apple(FB32, falling_apple.x, falling_apple.y, falling_apple.width, falling_apple.height);
@@ -36,6 +41,9 @@ int main()
         if (falling_apple.y > SCREEN_HEIGHT) {
             /* Reset apple to the top after it goes off-screen */
             falling_apple.y = -falling_apple.height;
+            
+            /* Generate a random x position between LEFT_BORDER and RIGHT_BORDER */
+            falling_apple.x = LEFT_BORDER + (rand() % (RIGHT_BORDER - LEFT_BORDER - falling_apple.width));
         }
 
         /* Check if the apple collides with the basket */
@@ -43,9 +51,10 @@ int main()
             falling_apple.x + falling_apple.width > player_basket.x &&     /* Check x-axis overlap */
             falling_apple.x < player_basket.x + player_basket.width)       /* Check x-axis overlap */
         {
-            increment_score(FB16, new_score);
-            /* Apple disappears upon collision */
-            falling_apple.y = -falling_apple.height;  /* Reset apple to the top */
+            increment_score(FB16, new_score);  /* Increment score */
+            /* Reset apple to the top and randomize x position upon collision */
+            falling_apple.y = -falling_apple.height;
+            falling_apple.x = LEFT_BORDER + (rand() % (RIGHT_BORDER - LEFT_BORDER - falling_apple.width));
         }
 
         /* Plot the basket at the new position */
