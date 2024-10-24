@@ -4,6 +4,8 @@
 #include "types.h"
 #include "bitmaps.h"
 #include "RASTER.H" 
+#include <stdlib.h> 
+#include <time.h>   
 
 /* 
 AUTHORS: John G, Zach L
