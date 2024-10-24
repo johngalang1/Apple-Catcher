@@ -3,8 +3,7 @@
 #include "bitmaps.h"
 #include "model.h"
 #include "events.h"
-#include <stdlib.h>  /* For rand() */
-#include <time.h>    /* For seeding rand() */
+#include "types.h"
 
 int main()
 {
@@ -20,14 +19,15 @@ int main()
     srand(time(NULL));
     
     clear_screen(FB32);  /* Clear the screen */
-    
+       
+    /* Plot vertical lines 128 pixels from the left and right borders */
     plot_vertical_line(FB16, LEFT_BORDER, 0, SCREEN_HEIGHT);  /* Left border */
     plot_vertical_line(FB16, SCREEN_WIDTH - 128, 0, SCREEN_HEIGHT);  /* Right border */ 
 
     update_score(FB16, new_score);
     update_round_timer(FB16, round_timer);
 
-    while (new_score->value < 10)  /* Game loop */
+    while (new_score->value < 10)  /* Game loop with timer */
     {
         /* Clear the previous position of the apple and basket */
         clear_apple(FB32, falling_apple.x, falling_apple.y, falling_apple.width, falling_apple.height);
@@ -38,22 +38,15 @@ int main()
 
         /* Check if the apple reaches the bottom of the screen */
         if (falling_apple.y > SCREEN_HEIGHT) {
-            /* Reset apple to the top after it goes off-screen */
-            falling_apple.y = -falling_apple.height;
-            
-            /* Generate a random x position between LEFT_BORDER and RIGHT_BORDER */
-            randomize_apple_position(&falling_apple);
+            /* Call the function to randomize the apple's position */
+            reset_apple_position(&falling_apple);
         }
 
-        /* Check if the apple collides with the basket */
-        if (falling_apple.y + falling_apple.height >= player_basket.y &&  /* Check y-axis overlap */
-            falling_apple.x + falling_apple.width > player_basket.x &&     /* Check x-axis overlap */
-            falling_apple.x < player_basket.x + player_basket.width)       /* Check x-axis overlap */
-        {
-            increment_score(FB16, new_score);  /* Increment score */
-            /* Reset apple to the top and randomize x position upon collision */
-            falling_apple.y = -falling_apple.height;
-            falling_apple.x = LEFT_BORDER + (rand() % (RIGHT_BORDER - LEFT_BORDER - falling_apple.width));
+        /* Check if the apple collides with the basket using the collision function */
+        if (check_apple_collision(&player_basket, &falling_apple)) {
+            /* Increment score outside of the collision check */
+            increment_score(FB16, new_score);
+            reset_apple_position(&falling_apple);  /* Reset the apple */
         }
 
         /* Plot the basket at the new position */
