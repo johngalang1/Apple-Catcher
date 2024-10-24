@@ -108,13 +108,3 @@ void move_apple(UINT32 *base, apple *this_apple)
     this_apple->y += 2;
     plot_apple_32(base, this_apple->x, this_apple->y, apple_bitmap, APPLE_HEIGHT);
 } 
-
-/* Function to generate a random x-position for the apple */
-void randomize_apple_position(apple *a)
-{
-    /* Randomize x-position within the defined borders */
-    a->x = (LEFT_BORDER + 1) + (rand() % (RIGHT_BORDER - LEFT_BORDER - a->width));
-    
-    /* Reset y-position to just above the screen */
-    a->y = -a->height;
-}
