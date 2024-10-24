@@ -15,11 +15,16 @@ int main()
     score *new_score = init_score();
     timer_round *round_timer = init_round_timer();
     
+    /* Define a message struct */
+    message game_message;
+    game_message.start_x = (SCREEN_WIDTH - (12 * 16)) / 2;  /* Center the message horizontally */
+    game_message.start_y = 20;   /* Vertical position at the top of the screen */
+    game_message.spacing = 16;   /* Spacing between letters */
+    game_message.text = "TIME UP"; /* The message text */
+    
     /* Seed the random number generator */
     srand(time(NULL));
-    
     clear_screen(FB32);  /* Clear the screen */
-       
     /* Plot vertical lines 128 pixels from the left and right borders */
     plot_vertical_line(FB16, LEFT_BORDER, 0, SCREEN_HEIGHT);  /* Left border */
     plot_vertical_line(FB16, SCREEN_WIDTH - 128, 0, SCREEN_HEIGHT);  /* Right border */ 
@@ -58,6 +63,8 @@ int main()
         /* Delay for visualization (e.g., 1/70th of a second) */
         Vsync();
     }
+
+    display_message(&game_message);
 
     return 0;
 }
