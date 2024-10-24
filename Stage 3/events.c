@@ -99,7 +99,7 @@ int check_apple_collision(basket *b, apple *a)
 void reset_apple_position(apple *a)
 {
     /* Randomize x-position within the defined borders */
-    a->x = LEFT_BORDER + (rand() % (RIGHT_BORDER - LEFT_BORDER - a->width));
+    a->x = (LEFT_BORDER + 1) + (rand() % (RIGHT_BORDER - LEFT_BORDER - a->width));
     
     /* Reset y-position to just above the screen */
     a->y = -a->height;
