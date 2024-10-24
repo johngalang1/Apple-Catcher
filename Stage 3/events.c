@@ -3,6 +3,18 @@
 #include "events.h"
 #include "raster.h"
 
+/* Function to check basket collision with borders */
+void check_basket_collision(basket *b)
+{
+    if (b->x <= LEFT_BORDER + 32)  /* Adjust for basket width */
+    {
+        b->x = LEFT_BORDER + 32;  /* Prevent going beyond the left border */
+    }
+    else if (b->x >= RIGHT_BORDER - b->width)  /* Hit right border */
+    {
+        b->x = RIGHT_BORDER - b->width;  /* Prevent overlap */
+    }
+}
 
 void update_score(UINT16 *base, score *curr_score)
 {
