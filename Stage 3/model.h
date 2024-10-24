@@ -70,7 +70,6 @@ void move_basket(basket *b, int direction);
 /* Apple Functions */
 void generate_apple(UINT16 col);
 void move_apple(UINT32 *base, apple *this_apple);
-void randomize_apple_position(apple *a);
 
 /* Score Functions */
 score *init_score();
