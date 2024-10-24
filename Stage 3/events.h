@@ -7,7 +7,7 @@
 
 void check_basket_collision(basket *b); 
 
-int check_apple_collision(basket *b, apple *a);
+void check_apple_collision(UINT32 *base, basket *b, apple *a, score *game_score);
 
 void reset_apple(apple *a); 
 
