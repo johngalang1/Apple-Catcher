@@ -80,15 +80,29 @@ void begin_countdown(UINT16 *base, timer_start *t)
     clear_char(base, t->x + 16, t->y, t->height);
 }
 
-/* apple functions */
-void check_apple_collision(UINT32 *base, basket *b, apple *a, score *game_score)
+int check_apple_collision(basket *b, apple *a)
 {
-    int caught = 0;
-    if(b->x - a->x < 16 || a->x - b->x < 80)
+    /* Check if the apple is within the horizontal bounds of the basket */
+    if ((a->x + a->width > b->x) && (a->x < b->x + b->width))  /* X-axis overlap */
     {
-        increment_score(base, game_score);
-        reset_apple(base, a);
+        /* Check if the apple has reached the basket's vertical position */
+        if (a->y + a->height >= b->y)  /* Y-axis overlap */
+        {
+            return 1;  /* Collision occurred */
+        }
     }
+    return 0;  /* No collision */
+}
+
+
+/* Function to generate a random x-position for the apple */
+void reset_apple_position(apple *a)
+{
+    /* Randomize x-position within the defined borders */
+    a->x = LEFT_BORDER + (rand() % (RIGHT_BORDER - LEFT_BORDER - a->width));
+    
+    /* Reset y-position to just above the screen */
+    a->y = -a->height;
 }
 
 /* MESSAGE FUNCTIONS */
