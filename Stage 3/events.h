@@ -9,7 +9,7 @@ void check_basket_collision(basket *b);
 
 void check_apple_collision(UINT32 *base, basket *b, apple *a, score *game_score);
 
-void reset_apple(apple *a); 
+void reset_apple_position(apple *a);
 
 void update_score(UINT16 *base, score *curr_score); 
 void increment_score(UINT16 *base, score *curr_score);
