@@ -51,6 +51,35 @@ void decrement_round_timer(UINT16 *base, timer_round *t)
     update_round_timer(base, t);
 }
 
+/* start timer functions */
+
+timer_start *init_start_timer()
+{
+    static timer_start t;
+        t.x = 288;
+        t.y = 200;
+        t.height = CHARACTER_HEIGHT;
+        t.value = 5;
+    return &t;
+}
+
+void begin_countdown(UINT16 *base, timer_start *t)
+{
+    while(t->value > 0)
+    {
+        clear_char(base, t->x, t->y, t->height);
+        plot_char(base, t->x, t->y, num_maps[t->value], t->height);
+        Cnecin();
+        t->value -= 1;
+    }
+    clear_char(base, t->x, t->y, t->height);
+    plot_char(base, t->x, t->y, letterG_bitmap, t->height);
+    plot_char(base, t->x + 16, t->y, letterO_bitmap, t->height);
+    Cnecin();
+    clear_char(base, t->x, t-> y, t->height);
+    clear_char(base, t->x + 16, t->y, t->height);
+}
+
 /* apple functions */
 void check_apple_collision(UINT32 *base, basket *b, apple *a, score *game_score)
 {
