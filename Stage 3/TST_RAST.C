@@ -20,8 +20,7 @@ int main()
     srand(time(NULL));
     
     clear_screen(FB32);  /* Clear the screen */
-       
-    /* Plot vertical lines 128 pixels from the left and right borders */
+    
     plot_vertical_line(FB16, LEFT_BORDER, 0, SCREEN_HEIGHT);  /* Left border */
     plot_vertical_line(FB16, SCREEN_WIDTH - 128, 0, SCREEN_HEIGHT);  /* Right border */ 
 
@@ -43,7 +42,7 @@ int main()
             falling_apple.y = -falling_apple.height;
             
             /* Generate a random x position between LEFT_BORDER and RIGHT_BORDER */
-            falling_apple.x = LEFT_BORDER + (rand() % (RIGHT_BORDER - LEFT_BORDER - falling_apple.width));
+            randomize_apple_position(&falling_apple);
         }
 
         /* Check if the apple collides with the basket */
