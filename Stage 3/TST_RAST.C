@@ -35,20 +35,9 @@ int main()
         /* Plot the basket at the new position */
         plot_basket_64(FB32, player_basket.x, player_basket.y, player_basket.bitmap, player_basket.height);
 
-        /* Check for boundaries and change direction if necessary */
-        if (player_basket.x <= LEFT_BORDER + 32)  /* Adjust for basket width */
-        {
-            direction = 1;  /* Start moving right */
-            increment_score(FB16, new_score);
-            decrement_round_timer(FB16, round_timer);
-        }
-        else if (player_basket.x >= RIGHT_BORDER - player_basket.width)  /* Hit right border */
-        {
-            player_basket.x = RIGHT_BORDER - player_basket.width;  /* Prevent overlap */
-            direction = -1;  /* Start moving left */
-            increment_score(FB16, new_score);
-            decrement_round_timer(FB16, round_timer);
-        }
+        check_basket_collision(&player_basket); 
+
+        decrement_round_timer(FB16,round_timer);
 
         /* Delay for visualization (e.g., 1/70th of a second) */
         Vsync();  
