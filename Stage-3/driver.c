@@ -159,7 +159,7 @@ void test_basket_right_border_collision()
 
         /* Move basket to the right */
         player_basket.x += direction * player_basket.delta_x;
-
+        plot_basket_64(FB32, player_basket.x, player_basket.y, player_basket.bitmap, player_basket.height);
         /* Call the collision check function */
         check_basket_collision(&player_basket);
         
@@ -171,7 +171,6 @@ void test_basket_right_border_collision()
         }
 
     }
-    plot_basket_64(FB32, player_basket.x, player_basket.y, player_basket.bitmap, player_basket.height);
     printf("Final Basket Position: X = %d, Y = %d\n", player_basket.x, player_basket.y);
     printf("\nPress Numbers to Test:\n 1. Basket Movement\n 2. Apple Collision\n 3. Random Apple Position\n"
        " 4. Basket Right Border Collision\n 5. Basket Left Border Collision\n 6. Apple Movement\n"
@@ -203,19 +202,19 @@ void test_basket_left_border_collision()
 
         /* Move basket to the left */
         player_basket.x += direction * player_basket.delta_x;
-
+        plot_basket_64(FB32, player_basket.x, player_basket.y, player_basket.bitmap, player_basket.height);
         /* Call the collision check function */
         check_basket_collision(&player_basket);
         
         /* Break if collision happens */
         if (player_basket.x == LEFT_BORDER + 32)
         {
+            check_basket_collision(&player_basket);
             printf("Basket collided with LEFT border at X = %d\n", player_basket.x);
             break;  /* Stop after colliding */
         }
 
     }
-    plot_basket_64(FB32, player_basket.x, player_basket.y, player_basket.bitmap, player_basket.height);
     printf("Final Basket Position: X = %d, Y = %d\n", player_basket.x, player_basket.y);
     printf("\nPress Numbers to Test:\n 1. Basket Movement\n 2. Apple Collision\n 3. Random Apple Position\n"
        " 4. Basket Right Border Collision\n 5. Basket Left Border Collision\n 6. Apple Movement\n"
@@ -241,16 +240,21 @@ void test_apple_movement()
     printf("Apple spawned at: X = %d, Y = %d (Top)\n", falling_apple.x, falling_apple.y);
 
     /* Move the apple using the move_apple function */
-    move_apple(FB32, &falling_apple);
-
+    while(falling_apple.y <= SCREEN_HEIGHT)
+    { 
+       move_apple(FB32, &falling_apple);
+    }
     /* Print the new position of the apple after moving */
     printf("Apple moved to: X = %d, Y = %d\n", falling_apple.x, falling_apple.y);
 
+    reset_apple_position(&falling_apple);  /* Reset apple to the top */
+    
     printf("\nPress Numbers to Test:\n 1. Basket Movement\n 2. Apple Collision\n 3. Random Apple Position\n"
        " 4. Basket Right Border Collision\n 5. Basket Left Border Collision\n 6. Apple Movement\n"
        " 7. Score Increment\n 8. Timer Decrement\n 9. Display Message\n Q - Quit\n");
 
 }
+
 
 /* Test score incrementer */
 void test_score_increment()
