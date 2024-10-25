@@ -49,7 +49,6 @@ typedef struct {
 
 typedef struct {
     UINT16 x, y;               
-    UINT16 width;              
     UINT32 height;             
     int value;                 
 } timer_start;
@@ -66,17 +65,25 @@ typedef struct {
 /* Basket Function */
 basket *init_basket();
 void move_basket(basket *b, int direction);
+void set_basket(basket *b, UINT16 set_x);
 
 /* Apple Functions */
 void generate_apple(UINT16 col);
-void move_apple(UINT32 *base, apple *this_apple);
+void move_apple(apple *this_apple);
+void set_apple(apple *a, int x, int y);
 
 /* Score Functions */
 score *init_score();
+void reset_score(score *score);
+void set_score(score *score, int x);
 
 /* Timer Functions */
 timer_round *init_round_timer();
 void decrement_round_timer(UINT16 *base, timer_round *t);
+void set_round_timer(timer_round *t, int x);
+
+timer_start *init_start_timer();
+void set_start_timer(timer_start *st, int x);
 
 
 
