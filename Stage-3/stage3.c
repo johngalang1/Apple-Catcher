@@ -7,6 +7,12 @@
 #include <stdio.h>
 #include "driver.h"
 
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: stage3.c
+PURPOSE: TESTS ALL FUNCTIONS FOR STAGE 3
+*/
+
 int main()
 {
     UINT32 *FB32 = Physbase();  
@@ -18,38 +24,36 @@ int main()
        " 4. Basket Right Border Collision\n 5. Basket Left Border Collision\n 6. Apple Movement\n"
        " 7. Score Increment\n 8. Timer Decrement\n 9. Display Message\n Q - Quit\n");
 
-
-    /* Game Loop for Testing */
     while ( input != 'Q')
     {
-        input = Cnecin();  /* Get user input */
+        input = Cnecin();
 
         switch (input)
         {
             case '1':
-                test_basket_movement();  /* Test basket movement */
+                test_basket_movement();  
                 break;
 
             case '2':
-                test_apple_collision();  /* Test apple collision */
+                test_apple_collision(); 
                 break;
 
             case '3':
-                test_random_apple_position();  /* Test random apple position */
+                test_random_apple_position();  
                 break;
             
             case '4':
-                test_basket_right_border_collision();  /* Test basket collision with the right border */
+                test_basket_right_border_collision(); 
                 break;
 
             case '5':
-                test_basket_left_border_collision();  /* Test basket collision with the left border */
+                test_basket_left_border_collision(); 
                 break;
             case '6':
-                test_apple_movement();  /* Test apple movement */
+                test_apple_movement();  
                 break;
             case '7':
-                test_score_increment();  /* Test score incrementer */
+                test_score_increment(); 
                 break;
             case '8': 
                 test_timer_decrement();
@@ -57,15 +61,9 @@ int main()
             case '9': 
                 test_display_message();
                 break;
-
-
             default:
-                /* Ignore any other input */
                 break;
         }
-
-        /* Small delay between tests */
-        Vsync();
     }
 
     return 0;
