@@ -5,6 +5,7 @@
 #include "events.h"
 #include "types.h"
 #include <stdio.h>
+#include "renderer.h"
 #include "driver.h"
 
 int main()
@@ -12,61 +13,48 @@ int main()
     UINT32 *FB32 = Physbase();  
     UINT16 *FB16 = (UINT16*) Physbase();  
     char input;
-    
+    basket *p_basket = init_basket();
+    timer_round *r_timer = init_round_timer();
+    score *curr_score = init_score();
+    timer_start *s_timer = init_start_timer();
+    generate_apple(3);  
+    generate_apple(6);
     clear_screen(FB32);
-    printf("\nPress Numbers to Test:\n 1. Basket Movement\n 2. Apple Collision\n 3. Random Apple Position\n"
-       " 4. Basket Right Border Collision\n 5. Basket Left Border Collision\n 6. Apple Movement\n"
-       " 7. Score Increment\n 8. Timer Decrement\n 9. Display Message\n Q - Quit\n");
+    /* testing starts here */
 
 
-    /* Game Loop for Testing */
     while ( input != 'Q')
     {
-        input = Cnecin();  /* Get user input */
+        printf("\nPress Numbers to Test:\n 1. Basket Movement\n 2. Apple movement\n 3. score rendering\n"
+       " 4. a single frame render(press a key to end)\n 5. master render including countdown timer(press a key to count down)\n Q - Quit\n");
+        input = Cnecin();
 
         switch (input)
         {
             case '1':
-                test_basket_movement();  /* Test basket movement */
+                test_basket_render(FB32, FB16, p_basket);  
                 break;
 
             case '2':
-                test_apple_collision();  /* Test apple collision */
+                test_apple_render(FB32, FB16, &apples[0], p_basket); 
                 break;
 
             case '3':
-                test_random_apple_position();  /* Test random apple position */
+                test_score_render(FB32, FB16, &apples[0], p_basket, curr_score);  
                 break;
             
             case '4':
-                test_basket_right_border_collision();  /* Test basket collision with the right border */
+                test_frame_render(FB32, FB16, &apples[0], p_basket,
+                        curr_score, r_timer); 
                 break;
 
             case '5':
-                test_basket_left_border_collision();  /* Test basket collision with the left border */
+                test_master_render(FB32, FB16, &apples[0], p_basket,
+                        curr_score, r_timer, s_timer); 
                 break;
-            case '6':
-                test_apple_movement();  /* Test apple movement */
-                break;
-            case '7':
-                test_score_increment();  /* Test score incrementer */
-                break;
-            case '8': 
-                test_timer_decrement();
-                break;
-            case '9': 
-                test_display_message();
-                break;
-
-
             default:
-                /* Ignore any other input */
                 break;
         }
-
-        /* Small delay between tests */
-        Vsync();
     }
-
     return 0;
 }
