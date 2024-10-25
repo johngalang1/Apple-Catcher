@@ -10,13 +10,13 @@
 /* 
 AUTHORS: John G, Zach L
 FILE NAME: model.h
-PURPOSE: CONTAINS ALL OBJECTS AND BEHAVIOR FUNCTION PROTOTYPES FOR THE GAME
+PURPOSE: CONTAINS FUNCTION PROTYPES FOR OBJECT BEHAVIOURS
 */
 
 typedef struct 
 {
     UINT16 x;        /* x Position of Apple */
-    int y;           /* int instead to allow apples to start off screen move onto it */
+    int y;          /* y Position of Apple */
     UINT32 width;       
     UINT32 height;
 }apple;
@@ -77,7 +77,5 @@ score *init_score();
 /* Timer Functions */
 timer_round *init_round_timer();
 void decrement_round_timer(UINT16 *base, timer_round *t);
-
-
 
 #endif
