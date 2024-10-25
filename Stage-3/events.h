@@ -4,6 +4,11 @@
 #include "RASTER.H" 
 #include "model.h"
 
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: events.h
+PURPOSE: CONTAINS ALL FUNCTION PROTOTYPES FOR ASYCHRONOUS AND SYNCHRONOUS EVENTS
+*/
 
 void check_basket_collision(basket *b); 
 
@@ -21,7 +26,6 @@ timer_start *init_start_timer();
 void begin_countdown(UINT16 *base, timer_start *t);
 int is_start_time_up(timer_start *t);
 
-/* Message Functions */ 
 void display_message(message *msg);
 void clear_message(message *msg);
 
