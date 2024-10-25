@@ -2,15 +2,16 @@
 
 /* 
 AUTHORS: John G, Zach L
-FILE NAME: model.h
-PURPOSE: CONTAINS FUNCTIONS FOR OBJECT BEHAVIOURS FOR THE GAME
+FILE NAME: model.c
+PURPOSE: CONTAINS FUNCTIONS FOR OBJECT BEHAVIOURS
 */
 
-/* 
-NAME: 
-PARAMETERS: 
-PURPOSE: 
-DETAILS:
+/*
+NAME: move_basket
+PARAMETERS: *b - pointer to the basket structure, 
+            direction - integer indicating movement direction
+PURPOSE: To update the basket's horizontal position based on the specified direction.
+DETAILS: Adjusts the basket’s x-position and ensures it stays within screen boundaries.
 */
 void move_basket(basket *b, int direction)
 {
@@ -42,8 +43,6 @@ basket *init_basket()
     return &player_basket;
 }
 
-/* score functions */
-
 score *init_score()
 {
     static score game_score;
@@ -56,8 +55,6 @@ score *init_score()
     return &game_score;
 }
 
-/* round timer functions */
-
 timer_round *init_round_timer()
 {
     static timer_round t;
@@ -69,7 +66,6 @@ timer_round *init_round_timer()
         t.value = 60; 
     return &t;
 }
-/* apple functions */
 
 apple apples[NUM_APPLES];
 
@@ -88,7 +84,6 @@ DETAILS: keeps track of how many apples have been created and uses
 EXAMPLE CALL: generate_apple(n) where n represents an integer 0 - 11 for 
             desired column.
 */
-
 void generate_apple(UINT16 col)
 {
     static int apple_count = 0;
@@ -102,6 +97,12 @@ void generate_apple(UINT16 col)
     apple_count++;
 }
 
+/*
+NAME: move_apple
+PARAMETERS: *base - framebuffer, *this_apple - pointer to the apple structure
+PURPOSE: To move an apple downward on the screen by a fixed increment.
+DETAILS: Clears the apple's previous position, increments its y-coordinate, and plots it in the new position.
+*/
 void move_apple(UINT32 *base, apple *this_apple)
 {
     clear_apple(base, this_apple->x, this_apple->y, APPLE_WIDTH, APPLE_HEIGHT);
