@@ -3,22 +3,40 @@
 #include "events.h"
 #include "raster.h"
 
-/* Function to check basket collision with borders */
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: events.c
+PURPOSE: CONTAINS ALL FUNCTIONS FOR ASYCHRONOUS AND SYNCHRONOUS EVENTS
+*/
+
+/*
+NAME: check_basket_collision
+PARAMETERS: *b - pointer to a basket structure
+PURPOSE: To prevent the basket from moving beyond the left or right screen borders.
+DETAILS: Checks the basket’s position against the left and right borders and adjusts it to stay within bounds.
+*/
+
 void check_basket_collision(basket *b)
 {
-    if (b->x <= LEFT_BORDER + 32)  /* Adjust for basket width */
+    if (b->x <= LEFT_BORDER + 32)  
     {
-        b->x = LEFT_BORDER + 32;  /* Prevent going beyond the left border */
+        b->x = LEFT_BORDER + 32;  
     }
-    else if (b->x >= RIGHT_BORDER - b->width)  /* Hit right border */
+    else if (b->x >= RIGHT_BORDER - b->width)  
     {
-        b->x = RIGHT_BORDER - b->width;  /* Prevent overlap */
+        b->x = RIGHT_BORDER - b->width; 
     }
 }
-
+/*
+NAME: update_score
+PARAMETERS: *base - framebuffer, 
+            *curr_score - pointer to the current score structure
+PURPOSE: To update the displayed score on the screen based on the current score value.
+DETAILS: Clears the previous digits and plots the ones and tens digits at specified coordinates using `num_maps`.
+*/
 void update_score(UINT16 *base, score *curr_score)
 {
-    int digit_1, digit_2; /*digit 1 is ones digit, digit 2 is tens digit*/
+    int digit_1, digit_2; 
     digit_1 = curr_score->value % 10;
     digit_2 = curr_score->value / 10;
 
@@ -34,9 +52,16 @@ void increment_score(UINT16 *base, score *curr_score)
     update_score(base, curr_score);
 }
 
+/*
+NAME: update_round_timer
+PARAMETERS: *base - framebuffer, 
+            *t - pointer to the round timer structure
+PURPOSE: To update the display of the round timer on the screen based on its current value.
+DETAILS: Clears the previous timer digits and plots the current ones and tens digits at specified coordinates using `num_maps`.
+*/
 void update_round_timer(UINT16 *base, timer_round *t)
 {
-    int digit_1, digit_2;   /* digit 1 is ones digit, digit 2 is tens digit */
+    int digit_1, digit_2; 
     digit_1 = t->value % 10;
     digit_2 = t->value / 10;
 
@@ -45,13 +70,12 @@ void update_round_timer(UINT16 *base, timer_round *t)
     clear_char(base, t->digit2_x, t->digit2_y, CHARACTER_HEIGHT);
     plot_char(base, t->digit2_x, t->digit2_y, num_maps[digit_2], CHARACTER_HEIGHT);
 }
+
 void decrement_round_timer(UINT16 *base, timer_round *t)
 {
     t->value -= 1;
     update_round_timer(base, t);
 }
-
-/* start timer functions */
 
 timer_start *init_start_timer()
 {
@@ -63,6 +87,12 @@ timer_start *init_start_timer()
     return &t;
 }
 
+/*
+NAME: begin_countdown
+PARAMETERS: *base - framebuffer, *t - pointer to the start timer structure
+PURPOSE: To display a countdown from the timer's starting value, decrementing with each key press.
+DETAILS: Clears and plots each countdown value, then displays "GO" when the countdown reaches zero.
+*/
 void begin_countdown(UINT16 *base, timer_start *t)
 {
     while(t->value > 0)
@@ -80,6 +110,14 @@ void begin_countdown(UINT16 *base, timer_start *t)
     clear_char(base, t->x + 16, t->y, t->height);
 }
 
+/*
+NAME: check_apple_collision
+PARAMETERS: *b - pointer to the basket structure, 
+            *a - pointer to the apple structure
+PURPOSE: To detect if a collision has occurred between the apple and the basket.
+DETAILS: Checks for overlap between the apple and basket on both the x and y axes, 
+        returns 1 if a collision is detected and 0 otherwise.
+*/
 int check_apple_collision(basket *b, apple *a)
 {
     /* Check if the apple is within the horizontal bounds of the basket */
@@ -88,14 +126,18 @@ int check_apple_collision(basket *b, apple *a)
         /* Check if the apple has reached the basket's vertical position */
         if (a->y + a->height >= b->y)  /* Y-axis overlap */
         {
-            return 1;  /* Collision occurred */
+            return 1; 
         }
     }
-    return 0;  /* No collision */
+    return 0;  
 }
 
-
-/* Function to generate a random x-position for the apple */
+/*
+NAME: reset_apple_position
+PARAMETERS: *a - pointer to the apple structure
+PURPOSE: To set a random x-position for the apple and reset its y-position above the screen.
+DETAILS: Randomizes the apple's x-position within screen borders and sets its y-position to start above the visible area.
+*/
 void reset_apple_position(apple *a)
 {
     /* Randomize x-position within the defined borders */
@@ -105,8 +147,6 @@ void reset_apple_position(apple *a)
     a->y = -a->height;
 }
 
-/* MESSAGE FUNCTIONS */
-/* Function to map a character to its corresponding bitmap */
 const UINT16 *get_bitmap_for_char(char c) {
     switch (c) {
         case 'A': return letterA_bitmap;
@@ -135,11 +175,17 @@ const UINT16 *get_bitmap_for_char(char c) {
         case 'X': return letterX_bitmap;
         case 'Y': return letterY_bitmap;
         case 'Z': return letterZ_bitmap;
-        default: return NULL;  /* Return NULL if the character is not supported */
+        default: return NULL; 
     }
 }
 
-/* Function to display the message */
+/*
+NAME: display_message
+PARAMETERS: *msg - pointer to the message structure
+PURPOSE: To display a specified message on the screen at given coordinates.
+DETAILS: Iterates through each character in the message, retrieves its bitmap, 
+        and plots it on the screen with defined spacing.
+*/
 void display_message(const message *msg) {
     int i = 0;
     while (msg->text[i] != '\0') {  /* Iterate through the text until the null terminator */
@@ -153,7 +199,12 @@ void display_message(const message *msg) {
     }
 }
 
-/* Function to clear the message from the screen */
+/*
+NAME: clear_message
+PARAMETERS: *msg - pointer to the message structure
+PURPOSE: To remove a displayed message from the screen.
+DETAILS: Iterates through each character in the message and clears it from the screen at specified coordinates.
+*/
 void clear_message(const message *msg) {
     UINT16 *FB16 = Physbase();
     int i = 0;
