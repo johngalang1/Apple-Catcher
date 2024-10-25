@@ -18,8 +18,5 @@ void decrement_round_timer(UINT16 *base, timer_round *t);
 
 int is_start_time_up(timer_start *t);
 
-/* Message Functions */ 
-void display_message(message *msg);
-void clear_message(message *msg);
 
 #endif
