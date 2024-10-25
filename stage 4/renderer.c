@@ -138,11 +138,10 @@ void render_borders(UINT16 *base)
 }
 
 void master_render(UINT32 *base32, UINT16 *base16, apple *a,
-        basket *b, score *score, timer_round *rt, timer_start *st)
+        basket *b, score *score, timer_round *rt)
     {
         render_apple(base32, a, 1);
         render_basket(base32, b, 1);
         render_score(base16, score);
         render_round_timer(base16, rt);
-        render_start_timer(base16, st);
     }
