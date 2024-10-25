@@ -24,22 +24,21 @@ DETAILS: Calculates the starting memory address in the framebuffer to the given
 void plot_apple_32(UINT32 *base, UINT16 x, int y,
                     const UINT32 *bitmap, unsigned int height)   
 {
-    int i = 0;    /* bitmap index counter */
-    UINT16 k = y; /* track current y position and bounds */
+    int i = 0;    
+    UINT16 k = y; 
     UINT32 *next = base + (k * 20) + (x >> 5);
-    /* adjust bitmap index if any part of apple is offscreen */
     if (y < 0)
     {
-        i = -y; /* skip the first |y| rows of the bitmap */
-        k = 0;  /* start plotting on the screen */
-        next = base + (k * 20) + (x >> 5); /* recalculate base to screen bounds */
+        i = -y; 
+        k = 0;  
+        next = base + (k * 20) + (x >> 5); 
     }
     while(i < height && k < SCREEN_HEIGHT)
     {
-        *next = bitmap[i]; /* plot current row of bitmap */
-        i += 1;            /* increment index counter */
-        k += 1;            /* increment k level to check for bounds */
-        next += 20;        /* increment framebuffer by 1 y level */
+        *next = bitmap[i]; 
+        i += 1;           
+        k += 1;           
+        next += 20;       
     }
 }
 /* 
