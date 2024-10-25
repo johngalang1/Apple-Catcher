@@ -25,7 +25,7 @@ const UINT16 *get_bitmap_for_char(char c);
 void render_borders(UINT16 *base);
 
 void master_render(UINT32 *base32, UINT16 *base16, apple *a,
-        basket *b, score *score, timer_round *rt, timer_start *st);
+        basket *b, score *score, timer_round *rt);
 
 
 #endif
