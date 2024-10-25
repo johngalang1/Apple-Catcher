@@ -1,4 +1,5 @@
 #include "model.h"
+#include "renderer.h"
 
 /* 
 AUTHORS: John G, Zach L
@@ -12,34 +13,30 @@ PARAMETERS:
 PURPOSE: 
 DETAILS:
 */
+
+/* basket funcitons */
 void move_basket(basket *b, int direction)
 {
     /* Update the basket's horizontal position based on direction */
     b->x += direction * b->delta_x;
-
-    /* Ensure the basket does not move beyond the left boundary (x = 0) */
-    if (b->x < 0) 
-    {
-        b->x = 0;  /* Stop at the left boundary */
-    }
-
-    /* Ensure the basket does not move beyond the right boundary */
-    if (b->x > (SCREEN_WIDTH - 64)) 
-    {
-        b->x = SCREEN_WIDTH - 64;  /* Stop at the right boundary */
-    }
 }
 
 basket *init_basket()
 {
     static basket player_basket;
-        player_basket.x = 128;
+        player_basket.x = 448;
         player_basket.y = 364;
-        player_basket.delta_x = 8;
+        player_basket.delta_x = 2;
         player_basket.width = BASKET_WIDTH;
         player_basket.height = BASKET_HEIGHT;
         player_basket.bitmap = basket_bitmap;
     return &player_basket;
+}
+
+/* only a testing function to allow the setting of basket x values */
+void set_basket(basket *b, UINT16 set_x)
+{
+    b->x = set_x;
 }
 
 /* score functions */
@@ -56,6 +53,18 @@ score *init_score()
     return &game_score;
 }
 
+/* a testing function to reset score */
+void reset_score(score *score)
+{
+    score->value = 0;
+}
+
+/* a testing function to set score to a specific value */
+void set_score(score *score, int x)
+{
+    score->value = x;
+}
+
 /* round timer functions */
 
 timer_round *init_round_timer()
@@ -69,6 +78,28 @@ timer_round *init_round_timer()
         t.value = 60; 
     return &t;
 }
+
+void set_round_timer(timer_round *t, int x)
+{
+    t->value = x;
+}
+
+/* start timer functions */
+timer_start *init_start_timer()
+{
+    static timer_start t;
+        t.x = 288;
+        t.y = 200;
+        t.height = CHARACTER_HEIGHT;
+        t.value = 5;
+    return &t;
+}
+
+void set_start_timer(timer_start *st, int x)
+{
+    st->value = x;
+}
+
 /* apple functions */
 
 apple apples[NUM_APPLES];
@@ -102,9 +133,14 @@ void generate_apple(UINT16 col)
     apple_count++;
 }
 
-void move_apple(UINT32 *base, apple *this_apple)
+void move_apple(apple *this_apple)
 {
-    clear_apple(base, this_apple->x, this_apple->y, APPLE_WIDTH, APPLE_HEIGHT);
     this_apple->y += 2;
-    plot_apple_32(base, this_apple->x, this_apple->y, apple_bitmap, APPLE_HEIGHT);
 } 
+
+/* a testing function to reset the y value of an apple */
+void set_apple(apple *a, int x, int y)
+{
+    a->y = y;
+    a->x = x;
+}
