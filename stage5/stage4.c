@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "renderer.h"
 #include "driver.h" 
+#include "input.h"
 
 /* 
 AUTHORS: John G, Zach L
@@ -20,7 +21,8 @@ int main()
     UINT16 *FB16 = (UINT16*) Physbase();  
     char input;
     model *curr_model = init_model();
-    clear_screen(FB32);
+    clear_screen(FB32); 
+    input_init();
 
     while ( input != 'Q')
     {
