@@ -18,30 +18,37 @@ DETAILS: Clears the screen, renders borders, sets an initial position for the ba
 */
 void test_basket_render(UINT32 *base32, UINT16 *base16, basket *b)
 {
-    int direction = -1;
+    int direction = 0;
     int total_collisions = 0;
     int collision_detected;
+
+    /* Initial setup */
     clear_screen(base32);
     render_borders(base16);
-    set_basket(b, 448);
+    set_basket(b, 300);
     render_basket(base32, b, 1);
     
-    /* loop to test the rendering */
-    while(total_collisions < 3)
+    /* Loop to test rendering and movement until total collisions reach 3 */
+    while (total_collisions < 100) 
     {
-        render_basket(base32, b, -1);   
-        move_basket(b, direction);
+        /* Erase the previous basket render */
+        render_basket(base32, b, -1);
+        
+        /* Move the basket based on user input */
+        move_basket_based_on_input(b);
+
+        /* Check for collisions */
         collision_detected = check_basket_collision(b, direction);
-        if(collision_detected == 0)
-        {
+        if (collision_detected == 1) {
             total_collisions++;
-            direction = -direction;
         }
+
+        /* Render the basket in its new position */
         render_basket(base32, b, 1);
 
+        /* Wait for the next frame */
         Vsync();
     }
-
 }
 
 /*
@@ -172,9 +179,10 @@ void test_master_render(UINT32 *base32, UINT16 *base16, apple *a, basket *b,
                         score *score, timer_round *rt, timer_start *st)
 {
     int fake_clock = 0;
-    int direction = -1;
     int b_collision;
     int a_collision;
+
+    /* Initial setup */
     clear_screen(base32);
     set_basket(b, 448);
     set_apple(a, 384, -32);
@@ -188,40 +196,51 @@ void test_master_render(UINT32 *base32, UINT16 *base16, apple *a, basket *b,
     render_score(base16, score);
     render_start_timer(base16, st);
 
-    while(score->value < 11 && rt->value > 0)
+    /* Main game loop */
+    while (score->value < 11 && rt->value > 0)
     {
-        /* first move basket */
-        render_basket(base32, b, -1);   
-        move_basket(b, direction);
-        b_collision = check_basket_collision(b, direction);
-        if(b_collision == 0)
-        {
-            direction = -direction;
-        }
+        /* Erase the previous basket render */
+        render_basket(base32, b, -1);
+
+        /* Move basket based on user input */
+        move_basket_based_on_input(b);
+
+        /* Check for basket collisions */
+        b_collision = check_basket_collision(b, 0);
+
+        /* Render the basket in its new position */
         render_basket(base32, b, 1);
-        /* then move apple */
+
+        /* Move apple */
         render_apple(base32, a, -1);
         move_apple(a);
         a_collision = check_apple_collision(b, a);
-        if(a_collision > 0)
+        if (a_collision > 0)
         {
+            /* Increment score if apple collides with basket */
             increment_score(score);
             render_score(base16, score);
             reset_apple_position(a);
         }
-        if(a->y == 368)
+
+        /* Reset apple if it reaches the bottom */
+        if (a->y == 368)
         {
             reset_apple_position(a);
         }
+        
+        /* Render the apple in its new position */
         render_apple(base32, a, 1);
 
+        /* Update round timer every 70 cycles */
         fake_clock++;
-        if(fake_clock == 70)
+        if (fake_clock == 70)
         {
             decrement_round_timer(base16, rt);
             fake_clock = 0;
         }
 
+        /* Wait for the next frame */
         Vsync();
     }
 }

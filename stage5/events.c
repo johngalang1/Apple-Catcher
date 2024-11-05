@@ -19,15 +19,16 @@ int check_basket_collision(basket *b, int direction)
     if (b->x <= LEFT_BORDER + 32)  
     {
         b->x = LEFT_BORDER + 32;  
-        direction = 0;
+        return 1;  /* Collision on the left side */
     }
     else if (b->x >= RIGHT_BORDER - b->width) 
     {
         b->x = RIGHT_BORDER - b->width; 
-        direction = 0;
+        return 1;  /* Collision on the right side */
     }
-    return direction;
+    return 0;  /* No collision */
 }
+
 
 
 void increment_score(score *curr_score)

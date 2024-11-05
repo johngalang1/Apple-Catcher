@@ -1,8 +1,7 @@
+test: stage4.o raster.o model.o bitmaps.o events.o renderer.o driver.o input.o
+	cc68x -g stage4.o raster.o model.o bitmaps.o events.o renderer.o driver.o input.o -o test  
 
-test: stage4.o raster.o model.o bitmaps.o events.o renderer.o driver.o
-	cc68x -g stage4.o raster.o model.o bitmaps.o events.o renderer.o driver.o -o test  
-
-stage4.o: stage4.c driver.h raster.h types.h bitmaps.h model.h events.h
+stage4.o: stage4.c driver.h raster.h types.h bitmaps.h model.h events.h input.h
 	cc68x -g -c stage4.c
 
 driver.o: driver.c driver.h
@@ -23,5 +22,8 @@ events.o: events.c events.h
 renderer.o: renderer.c renderer.h
 	cc68x -g -c renderer.c
 
+input.o: input.c input.h
+	cc68x -g -c input.c
+
 clean:
-	$(RM) *.o test    
+	$(RM) *.o test

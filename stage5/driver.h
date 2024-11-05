@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <osbind.h>
 #include "renderer.h" 
+#include "input.h"
 
 /* 
 AUTHORS: John G, Zach L
