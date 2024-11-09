@@ -8,13 +8,25 @@
 #include "renderer.h"
 #include "driver.h" 
 #include "input.h"
-#include "time.h"
 
 /* 
 AUTHORS: John G, Zach L
 FILE NAME: aplcatch.c
 PURPOSE: CONTAINS MAIN GAME LOOP
 */
+
+/* Function to get the current clock time from the vertical blank counter */
+unsigned long get_time() {
+    unsigned long *timer_address = (unsigned long *)0x462;
+    unsigned long time;
+
+    /* Switch to supervisor mode and read timer */
+    unsigned long old_sr = Super(0);  
+    time = *timer_address;
+    Super(old_sr);                    
+
+    return time;
+}
 
 int main() {
     int quit = 0;
@@ -29,7 +41,7 @@ int main() {
     clear_screen(FB32); 
     input_init();
     render_model(FB32, FB16, &(curr_model->apples[0]), &(curr_model->b),
-                        &(curr_model->curr_score), &(curr_model->rt), &(curr_model->st)); 
+                 &(curr_model->curr_score), &(curr_model->rt), &(curr_model->st)); 
 
     /* Main game loop */
     while (!quit && curr_model->rt.value > 0) {
@@ -43,6 +55,7 @@ int main() {
             }
         }
 
+        /* Update and render on each clock tick */
         timeNow = get_time();
         if (timeNow != timeThen) {
             int b_collision = check_basket_collision(&(curr_model->b), 0);
@@ -52,8 +65,9 @@ int main() {
             /* Every 70 ticks, decrement the round timer by 1 second */
             if (tickCounter >= 70) {
                 decrement_round_timer(FB16, &(curr_model->rt));
-                tickCounter = 0;  /* Reset tick counter for the next second */
+                tickCounter = 0;
             }
+
             /* Erase and update basket based on user input */
             render_basket(FB32, &(curr_model->b), -1);
             move_basket_based_on_input(&(curr_model->b));
