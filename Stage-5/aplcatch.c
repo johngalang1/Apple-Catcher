@@ -10,6 +10,12 @@
 #include "input.h"
 #include "time.h"
 
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: aplcatch.c
+PURPOSE: CONTAINS MAIN GAME LOOP
+*/
+
 int main() {
     int quit = 0;
     unsigned long timeThen, timeNow;
@@ -19,7 +25,7 @@ int main() {
     char input;
 
     model *curr_model = init_model();
-    timeThen = get_time();   /* Get initial clock time */
+    timeThen = get_time();  
     clear_screen(FB32); 
     input_init();
     render_model(FB32, FB16, &(curr_model->apples[0]), &(curr_model->b),
@@ -27,24 +33,20 @@ int main() {
 
     /* Main game loop */
     while (!quit && curr_model->rt.value > 0) {
-        /* Asynchronous events: Process user input if available */
         if (check_input()) {
             input = get_input();
 
-            /* Check for quit command */
             if (input == 'q' || input == 'Q') {
                 quit = 1;
             } else {
-                process_input(input, &quit);  /* Process other input */
+                process_input(input, &quit);
             }
         }
 
-        /* Synchronous events: Update and render on each clock tick */
         timeNow = get_time();
         if (timeNow != timeThen) {
             int b_collision = check_basket_collision(&(curr_model->b), 0);
             int a_collision = check_apple_collision(&(curr_model->b), &(curr_model->apples[0]));
-            /* Increment tick counter */
             tickCounter++;
 
             /* Every 70 ticks, decrement the round timer by 1 second */
@@ -77,6 +79,5 @@ int main() {
         }
     }
 
-    /* Final cleanup (if needed) */
     return 0;
 }

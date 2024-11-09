@@ -1,23 +1,28 @@
 #include "input.h"
-#include <osbind.h>   /* For Cconis and Cnecin functions */
-#include "model.h"    /* For move_basket and basket struct */
+#include <osbind.h>   
+#include "model.h"   
+
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: input.c
+PURPOSE: CONTAINS ALL FUNCTIONS CONTROLLING INPUT FOR THE BASKET
+*/
 
 /* Static variable to hold the current basket action */
 static BasketAction current_basket_action = BASKET_MOVE_NONE;
 
-/* Initializes the input module */
 void input_init() {
     current_basket_action = BASKET_MOVE_NONE;
 }
 
 /* Checks if there is input available */
 int check_input() {
-    return Cconis();  /* Returns non-zero if input is available */
+    return Cconis(); 
 }
 
 /* Retrieves the next input character from the keyboard buffer */
 char get_input() {
-    return (char)Cnecin();  /* Reads a character from the keyboard */
+    return (char)Cnecin(); 
 }
 
 /* Processes a specific input character */
@@ -48,7 +53,6 @@ void move_basket_based_on_input(basket *b) {
         direction = 1;
     }
 
-    /* Move the basket with the specified direction or stop if no input */
     move_basket(b, direction);
 }
 

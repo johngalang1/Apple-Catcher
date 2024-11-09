@@ -1,7 +1,12 @@
 #ifndef INPUT_H
 #define INPUT_H
+#include "model.h"  
 
-#include "model.h"  /* Include model.h to recognize the basket struct */
+/* 
+AUTHORS: John G, Zach L
+FILE NAME: input.h
+PURPOSE: CONTAINS ALL FUNCTION PROTOTYPES FOR INPUT FUNCTIONS
+*/
 
 typedef enum {
     BASKET_MOVE_NONE,
