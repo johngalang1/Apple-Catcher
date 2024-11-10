@@ -1,0 +1,25 @@
+      
+      
+      IF THE CURRENT BUFFER IS THE FRONT BUFFER
+            /* Erase and update basket based on user input */
+            render_basket(BACK BUFFER, &(curr_model->b), -1);
+            move_basket_based_on_input(&(curr_model->b));
+            render_basket(BACK BUFFER, &(curr_model->b), 1);
+
+            /* Update and move apple */
+            render_apple(BACK BUFFER, &(curr_model->apples[0]), -1);
+            move_apple(&(curr_model->apples[0]));
+            if (a_collision > 0) {
+                increment_score(&(curr_model->curr_score));
+                render_score(BACK BUFFER, &(curr_model->curr_score));
+                reset_apple_position(&(curr_model->apples[0]));
+            }
+
+            /* Reset apple if it reaches the bottom */
+            if (curr_model->apples[0].y == 368) {
+                reset_apple_position(&(curr_model->apples[0]));
+            }
+            render_apple(FB32, &(curr_model->apples[0]), 1);
+
+    ELSE IF THE CURRENT BUFFER IS THE BACK BUFFER 
+            
