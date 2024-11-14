@@ -77,7 +77,7 @@ DETAILS: Fills every 32 bits with 0's for a total of 8000 iterations, since
 */
 void clear_screen(UINT32 *base)
 { 
-    UINT32 clear_longword = (SCREEN_WIDTH * SCREEN_HEIGHT) >> 5; 
+    UINT32 clear_longword = (256000) >> 5; 
     int i; 
 
     for(i = 0; i < clear_longword; i++)

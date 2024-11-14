@@ -38,8 +38,7 @@ void master_render(UINT32 *base32, UINT16 *base16, apple *a,
 void render_model(UINT32 *base32, UINT16 *base16, apple *a,    
         basket *b, score *score, timer_round *rt, timer_start *st); 
 
-void initialize_model(UINT32 *base32, UINT16 *base16, apple *a,
-        basket *b, score *score, timer_round *rt);
+void initialize_model(apple *a, basket *b, score *score, timer_round *rt);
 
 void update_model(UINT32 *base32, UINT16 *base16, apple *a,
         basket *b, score *score, timer_round *rt); 

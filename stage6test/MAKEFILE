@@ -1,13 +1,10 @@
 all: clean test
 
-test: aplcatch.o raster.o model.o bitmaps.o events.o renderer.o driver.o input.o
-	cc68x -g aplcatch.o raster.o model.o bitmaps.o events.o renderer.o driver.o input.o -o test  
+test: aplcatch.o raster.o model.o bitmaps.o events.o renderer.o input.o
+	cc68x -g aplcatch.o raster.o model.o bitmaps.o events.o renderer.o input.o -o test  
 
-aplcatch.o: aplcatch.c driver.h raster.h types.h bitmaps.h model.h events.h input.h
+aplcatch.o: aplcatch.c raster.h types.h bitmaps.h model.h events.h input.h
 	cc68x -g -c aplcatch.c
-
-driver.o: driver.c driver.h
-	cc68x -g -c driver.c
 
 raster.o: raster.c raster.h
 	cc68x -g -c raster.c

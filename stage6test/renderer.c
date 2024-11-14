@@ -23,7 +23,7 @@ void render_apple(UINT32 *base, apple *a, int op)
     }
     else
     {
-        clear_apple(base, a->x, a->y, a->width, a->height);
+        clear_apple(base, a->x, a->y, APPLE_WIDTH, APPLE_HEIGHT);
     }
 }
 
@@ -44,7 +44,7 @@ void render_basket(UINT32 *base, basket *b, int op)
     }
     else
     {
-        clear_basket(base, b->x, b->y, b->width, b->height);
+        clear_basket(base, b->x, b->y, BASKET_WIDTH, BASKET_HEIGHT);
     }
 }
 
@@ -233,18 +233,12 @@ void render_model(UINT32 *base32, UINT16 *base16, apple *a, basket *b,
 }
 
 /* Initializes model before game starts*/
-void initialize_model(UINT32 *base32, UINT16 *base16, apple *a,
-        basket *b, score *score, timer_round *rt)
+void initialize_model(apple *a, basket *b, score *score, timer_round *rt)
 { 
     set_basket(b, 320); 
     set_apple(a, 384, -32);
     reset_score(score);
     set_round_timer(rt, 60);
-
-    render_basket(base32, b, 1);
-    render_apple(base32, a, 1);
-    render_round_timer(base16, rt);
-    render_score(base16, score);
 
 }
 
@@ -261,20 +255,17 @@ void update_model(UINT32 *base32, UINT16 *base16, apple *a,
 /* Function to render objects to a specified buffer */
 void render_objects(UINT32 *buffer, model *curr_model, int a_collision) {
     /* Render basket to specified buffer */
-    render_basket(buffer, &(curr_model->b), -1);  /* Clear previous position */
     move_basket_based_on_input(&(curr_model->b));
-    render_basket(buffer, &(curr_model->b), 1);   /* Render new position */
+    render_basket(buffer, &(curr_model->b), 1);  /* Clear previous position */
 
     /* Render apple to specified buffer */
     render_apple(buffer, &(curr_model->apples[0]), -1);  /* Clear previous position */
     move_apple(&(curr_model->apples[0]));
     if (a_collision > 0) {
         increment_score(&(curr_model->curr_score));
-        render_score((UINT16*) buffer, &(curr_model->curr_score));
         reset_apple_position(&(curr_model->apples[0]));
     }
     if (curr_model->apples[0].y == 368) {
         reset_apple_position(&(curr_model->apples[0]));
     }
-    render_apple(buffer, &(curr_model->apples[0]), 1);  /* Render new apple position */
 }
