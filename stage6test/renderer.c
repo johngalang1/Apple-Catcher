@@ -98,19 +98,8 @@ DETAILS: Clears and plots each countdown value at specified coordinates, and dis
 */
 void render_start_timer(UINT16 *base, timer_start *st)
 {
-    while(st->value > 0)
-    {
-        clear_char(base, st->x, st->y, st->height);
-        plot_char(base, st->x, st->y, num_maps[st->value], st->height);
-        Cnecin();
-        st->value -= 1;
-    }
     clear_char(base, st->x, st->y, st->height);
-    plot_char(base, st->x, st->y, letterG_bitmap, st->height);
-    plot_char(base, st->x + 16, st->y, letterO_bitmap, st->height);
-    Cnecin();
-    clear_char(base, st->x, st-> y, st->height);
-    clear_char(base, st->x + 16, st->y, st->height);
+    plot_char(base, st->x, st->y, num_maps[st->value], st->height);    
 }
 
 /* MESSAGE FUNCTIONS */
