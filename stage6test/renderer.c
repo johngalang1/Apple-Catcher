@@ -23,7 +23,7 @@ void render_apple(UINT32 *base, apple *a, int op)
     }
     else
     {
-        clear_apple(base, a->x, a->y, APPLE_WIDTH, APPLE_HEIGHT);
+        clear_apple(base, a->x, a->y - 2, APPLE_WIDTH, APPLE_HEIGHT);
     }
 }
 
