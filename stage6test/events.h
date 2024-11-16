@@ -21,6 +21,8 @@ void increment_score(score *curr_score);
 
 void decrement_round_timer(UINT16 *base, timer_round *t);
 
+void decrement_start_timer(UINT16 *base, timer_start *t);
+
 int is_start_time_up(timer_start *t);
 
 
