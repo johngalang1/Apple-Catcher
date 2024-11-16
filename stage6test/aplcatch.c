@@ -81,6 +81,33 @@ int main() {
     render_borders((UINT16 *)back_buffer);
 
     /* PLACE START TIMER HERE*/
+    while (curr_model->st.value >= -1)
+    {
+        timeNow = get_time();
+        if (timeNow != timeThen)
+        {
+            tickCounter++;
+        }
+        if (tickCounter >= 70)
+        {
+            if (curr_model->st.value > 0)
+            {
+                render_start_timer((UINT16 *)back_buffer, &(curr_model->st));
+            }
+            else
+            {
+                plot_char((UINT16 *)back_buffer, curr_model->st.x, curr_model->st.y, 
+                letterG_bitmap, curr_model->st.height);
+                plot_char((UINT16 *)back_buffer, curr_model->st.x + 16, curr_model->st.y,
+                letterO_bitmap, curr_model->st.height);
+            }
+            decrement_start_timer((UINT16 *)back_buffer, &(curr_model->st));
+            tickCounter = 0;
+        }
+        timeThen = timeNow;
+    }
+    clear_char((UINT16 *)back_buffer, curr_model->st.x, curr_model->st.y, curr_model->st.height);
+    clear_char((UINT16 *)back_buffer, curr_model->st.x + 16, curr_model->st.y, curr_model->st.height);
 
     /* Render the initial game model to the back buffer */
     initialize_model(&(curr_model->apples[0]),&(curr_model->b), 
