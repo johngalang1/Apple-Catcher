@@ -148,25 +148,24 @@ int main() {
                 tickCounter = 0;
             }
             render_basket(curr_buffer, &(curr_model->b), 1);    
-    
+
+            render_apple(back_buffer, &(curr_model->apples[0]), -1); /* remove apple from back buffer */
             move_apple(&(curr_model->apples[0]));
             if (a_collision > 0) {
                 increment_score(&(curr_model->curr_score)); 
                 render_apple(front_buffer, &(curr_model->apples[0]), -1);  /* Clear previous position */
-                render_apple(back_buffer, &(curr_model->apples[0]), -1);  /* Clear previous position */
                 reset_apple_position(&(curr_model->apples[0]));
             } 
             
             if (curr_model->apples[0].y == 368) {
                 render_apple(front_buffer, &(curr_model->apples[0]), -1);  /* Clear previous position */
-                render_apple(back_buffer, &(curr_model->apples[0]), -1);  /* Clear previous position */
                 reset_apple_position(&(curr_model->apples[0])); 
             }
 
             /* Step 4: Render remaining objects */
             /*update_model(curr_buffer, (UINT16*) curr_buffer, &(curr_model->apples[0]), &(curr_model->b), &(curr_model->curr_score), &(curr_model->rt)); */  
             Vsync();   
-            render_apple(curr_buffer, &(curr_model->apples[0]), 1);  /* Clear previous position */
+            render_apple(back_buffer, &(curr_model->apples[0]), 1);  /* plot apple */
             render_round_timer((UINT16*)curr_buffer, &(curr_model->rt));
             render_score((UINT16*)curr_buffer, &(curr_model->curr_score)); 
             
