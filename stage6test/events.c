@@ -1,4 +1,4 @@
-#include <stddef.h>  
+[#include <stddef.h>  
 #include <osbind.h>  
 #include "events.h"
 #include "raster.h"
@@ -43,6 +43,11 @@ void decrement_round_timer(UINT16 *base, timer_round *t) {
         t->value--;  /* Decrement timer value by 1 second */
         
     }
+}
+
+void decrement_start_timer(UINT16 *base, timer_start *t)
+{
+    t->value--;
 }
 
 
