@@ -1,0 +1,22 @@
+all: clean test
+
+test: psgtst.o PSG.o music.o effects.o driver.o
+	cc68x -g psgtst.o PSG.o music.o effects.o driver.o -o test  
+
+psgtst.o: psgtst.c PSG.h music.h effects.h TYPES.H driver.h
+	cc68x -g -c psgtst.c
+
+PSG.o: PSG.c PSG.h TYPES.H
+	cc68x -g -c PSG.c
+
+music.o: music.c music.h PSG.h TYPES.H
+	cc68x -g -c music.c  
+
+effects.o: effects.c effects.h PSG.h TYPES.H
+	cc68x -g -c effects.c  
+
+driver.o: driver.c driver.h PSG.h music.h effects.h TYPES.H
+	cc68x -g -c driver.c
+
+clean:
+	$(RM) *.o test
