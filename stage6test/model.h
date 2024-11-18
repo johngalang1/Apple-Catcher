@@ -76,7 +76,7 @@ void set_basket(basket *b, UINT16 set_x);
 
 /* Apple Functions */
 apple generate_apple(UINT16 col);
-void move_apple(apple *this_apple);
+int move_apple(model *curr_model, int i);
 void set_apple(apple *a, int x, int y);
 
 /* Score Functions */
