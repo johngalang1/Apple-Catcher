@@ -18,7 +18,7 @@ model *init_model()
 {
     int i;
     static model curr_model;
-    for(i = 0; i < 3; i++)
+    for(i = 0; i < NUM_APPLES; i++)
     {
         curr_model.apples[i] = generate_apple(i);
     }
@@ -26,6 +26,8 @@ model *init_model()
         curr_model.curr_score = init_score();
         curr_model.rt = init_round_timer();
         curr_model.st = init_start_timer();
+        set_apple(&(curr_model.apples[1]), curr_model.apples[1].x, -134);
+        set_apple(&(curr_model.apples[2]), curr_model.apples[2].x, -268);
     return &curr_model;
 }
 
@@ -141,10 +143,33 @@ apple generate_apple(UINT16 col)
     return A;
 }
 
-void move_apple(apple *this_apple)
+/* 
+NAME: move_apple
+PARAMETERS: model *curr_model - struct that contains the apples array
+            int i - index for the current apple being moved
+PURPOSE: to move and check for collisions for a single apple object
+DETAILS: moves a single apple to the next y level + 2, then calls
+        apple_basket_collision or apple_floor_collision to determine
+        if there are any collisions to report with the new location
+OUTPUTS: returns an int to signify collision status if any: 
+        0 = no collision detected                            
+        1 = apple_basket collision detected
+        2 = apple_floor collision detected
+*/
+int move_apple(model *curr_model, int i)
 {
-    this_apple->y += 2;
-} 
+    int collision = 0;
+    curr_model->apples[i].y += 2;
+    if (apple_basket_collision(curr_model, i))
+    {
+        collision = 1;
+    }
+    else if (apple_floor_collision(curr_model, i))
+    {
+        collision = 2;
+    }
+    return collision;
+}   
 
 /* a testing function to reset the y value of an apple */
 void set_apple(apple *a, int x, int y)
