@@ -1,0 +1,28 @@
+all: clean test
+
+test: aplcatch.o raster.o model.o bitmaps.o events.o renderer.o input.o
+	cc68x -g aplcatch.o raster.o model.o bitmaps.o events.o renderer.o input.o -o test  
+
+aplcatch.o: aplcatch.c raster.h types.h bitmaps.h model.h events.h input.h
+	cc68x -g -c aplcatch.c
+
+raster.o: raster.c raster.h
+	cc68x -g -c raster.c
+
+model.o: model.c model.h  
+	cc68x -g -c model.c  
+
+bitmaps.o: bitmaps.c bitmaps.h types.h
+	cc68x -g -c bitmaps.c  
+
+events.o: events.c events.h
+	cc68x -g -c events.c
+  
+renderer.o: renderer.c renderer.h
+	cc68x -g -c renderer.c
+
+input.o: input.c input.h
+	cc68x -g -c input.c 
+
+clean:
+	$(RM) *.o test
