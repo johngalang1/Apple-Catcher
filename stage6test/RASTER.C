@@ -31,7 +31,7 @@ void plot_apple_32(UINT32 *base, UINT16 x, int y,
     {
         i = -y; 
         k = 0;  
-        next = base + (k * 20) + (x >> 5); 
+        next = base + (x >> 5); 
     }
     while(i < height && k < SCREEN_HEIGHT)
     {
@@ -192,14 +192,21 @@ DETAILS: Calculates the starting address in the framebuffer using (x, y). Each r
 */
 
 void clear_apple(UINT32 *base, int x, int y, unsigned int width, unsigned int height)
-{
-    UINT32 *next = base + (y * 20) + (x >> 5);
+{ 
+    UINT32 *next; 
     int i;
+    /* Ensure the apple's width is always 32 pixels */
+    if (width != 32) return; 
+
+    /* Ensure the starting coordinates are valid */
+    if (x < 0 || y < 0 || y + height > SCREEN_HEIGHT) return;
+
+    next = base + (y * 20) + (x >> 5); 
 
     for (i = 0; i < height; i++)
     {
-        next[0] = 0x00000000;  
-        next += 20;  
+        *next = 0x00000000;  /* Set all 32 pixels in this row to black */
+        next += 20;          /* Move to the next row in the buffer */
     }
 }
 
