@@ -191,8 +191,8 @@ PARAMETERS:
     *b - pointer to the basket structure
     *score - pointer to the score structure
     *rt - pointer to the round timer structure
-PURPOSE: To render the apple, basket, score, and round timer on the screen.
-DETAILS: Calls individual render functions to display each game element at their respective positions.
+PURPOSE: To render the apple, basket, score, and round timer on the screen (testing function).
+DETAILS: calls all render functions to test program.
 */
 void master_render(UINT32 *base32, UINT16 *base16, apple *a,
         basket *b, score *score, timer_round *rt)
@@ -222,14 +222,11 @@ void render_model(UINT32 *base32, UINT16 *base16, apple *a, basket *b,
 }
 
 /* Initializes model before game starts*/
-void initialize_model(apple *a, basket *b, score *score, timer_round *rt)
+/*void initialize_game(UINT32 *base, model *curr_model)
+int i;
 { 
-    set_basket(b, 320); 
-    set_apple(a, 384, -32);
-    reset_score(score);
-    set_round_timer(rt, 60);
-
-}
+    for (i = 0; i < NUM_APPLES)
+}*/
 
 /* Updates game between buffers */
 void update_model(UINT32 *base32, UINT16 *base16, apple *a,
@@ -242,13 +239,12 @@ void update_model(UINT32 *base32, UINT16 *base16, apple *a,
 }        
 
 /* Function to render objects to a specified buffer */
+/*
 void render_objects(UINT32 *buffer, model *curr_model, int a_collision) {
-    /* Render basket to specified buffer */
     move_basket_based_on_input(&(curr_model->b));
-    render_basket(buffer, &(curr_model->b), 1);  /* Clear previous position */
+    render_basket(buffer, &(curr_model->b), 1);  
 
-    /* Render apple to specified buffer */
-    render_apple(buffer, &(curr_model->apples[0]), -1);  /* Clear previous position */
+    render_apple(buffer, &(curr_model->apples[0]), -1);  
     move_apple(&(curr_model->apples[0]));
     if (a_collision > 0) {
         increment_score(&(curr_model->curr_score));
@@ -257,4 +253,4 @@ void render_objects(UINT32 *buffer, model *curr_model, int a_collision) {
     if (curr_model->apples[0].y == 368) {
         reset_apple_position(&(curr_model->apples[0]));
     }
-}
+}*/
