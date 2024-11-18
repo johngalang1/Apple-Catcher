@@ -18,8 +18,6 @@ void test_psg_routines() {
     UINT8 test_value = 123; 
     UINT8 read_value; 
 
-    printf("Testing PSG routines...\n");
-
     /* Write the value to the PSG register */
     write_psg(reg, test_value);
     printf("Wrote value %d to register %d.\n", test_value, reg);
@@ -41,8 +39,6 @@ void test_psg_routines() {
  * Purpose: Tests tone generation by starting with one tone and changing it after user input.
  */
 void test_tone() {
-    printf("Testing tone generation on Channel A...\n");
-
 
     set_tone(0, 478);      
     set_volume(0, 10);         
@@ -59,7 +55,7 @@ void test_tone() {
     set_volume(0, 10);       
     enable_channel(0, 1, 0);  
 
-    printf("Playing new tone (319). Press any key to stop.\n");
+    printf("Playing tone (319). Press any key to stop.\n");
 
     while (!Cconis()) {
         Vsync(); 
@@ -75,7 +71,6 @@ void test_tone() {
  *          and decreasing the volume after another key press.
  */
 void test_volume() {
-    printf("Testing volume control on Channel A...\n");
 
     set_tone(0, 478);        
     set_volume(0, 7);         
@@ -105,7 +100,6 @@ void test_volume() {
     Cnecin(); 
 
     set_volume(0, 0);
-    printf("Volume test complete.\n");
 }
 
 /*
@@ -113,7 +107,6 @@ void test_volume() {
  * Purpose: Tests enabling and disabling tone and noise on Channel A using key presses.
  */
 void test_enable_channel() {
-    printf("Testing enable_channel on Channel A...\n");
 
     set_tone(0, 478);       
     set_volume(0, 10);        
@@ -145,7 +138,6 @@ void test_enable_channel() {
     Cnecin(); 
 
     set_volume(0, 0);
-    printf("Channel test complete.\n");
 }
 
 /*
@@ -153,12 +145,11 @@ void test_enable_channel() {
  * Purpose: Tests the stop_sound function by playing a tone and stopping it on user input.
  */
 void test_stop() {
-    printf("Testing stop_sound function...\n");
 
     set_tone(0, 478);         
     set_volume(0, 10);         
     enable_channel(0, 1, 0);  
-    printf("Tone is playing on Channel A. Press any key to stop the sound.\n");
+    printf("Tone is playing on Channel A. \nPress any key to stop the sound.\n");
 
     while (!Cconis()) {
         Vsync(); 
@@ -166,7 +157,6 @@ void test_stop() {
     Cnecin(); 
 
     stop_sound();
-    printf("All sound stopped. Test complete.\n");
 } 
 
 /*
@@ -175,12 +165,11 @@ void test_stop() {
  *          and modifying it based on user input.
  */
 void test_noise() {
-    printf("Testing noise generator on Channel C...\n");
 
     set_noise(12);          
     set_volume(2, 10);         
     enable_channel(2, 0, 1);  
-    printf("Noise enabled on Channel C with tuning 12. Press any key to change tuning.\n");
+    printf("Noise enabled on Channel C with tuning 12.\nPress any key to change tuning.\n");
 
     while (!Cconis()) {
         Vsync(); 
@@ -198,7 +187,6 @@ void test_noise() {
     Cnecin(); 
 
     set_volume(2, 0);
-    printf("Noise test complete.\n");
 }
 
 /*
@@ -209,11 +197,10 @@ void test_noise() {
 void test_envelope() {
     int shape;
     
-    printf("Testing envelope generator on Channel A...\n");
     set_tone(0, 284);         
     set_volume(0, 8);        
     enable_channel(0, 1, 0);  
-    printf("Tone enabled on Channel A. Press any key to cycle through envelope shapes.\n");
+    printf("Tone enabled on Channel A.\nPress any key to cycle through envelope shapes.\n");
 
     for (shape = 0; shape < 16; shape++) {
         while (!Cconis()) {
@@ -224,7 +211,6 @@ void test_envelope() {
         set_envelope(shape, 5000); 
     }
     set_volume(0, 0);
-    printf("Envelope test finished.\n");
 }
 
 /*
@@ -234,7 +220,6 @@ void test_envelope() {
 void test_music() {
 
     UINT32 time_elapsed_melody = 0; 
-    printf("Testing music module...\n");
 
     start_music();
     printf("Music started. Press any key to stop.\n");
@@ -246,7 +231,6 @@ void test_music() {
     Cnecin();
 
     stop_sound();
-    printf("Music test complete.\n");
 } 
 
 /*
@@ -254,8 +238,6 @@ void test_music() {
  * Purpose: Tests sound effects by playing each effect sequentially.
  */
 void test_effects() {
-    printf("Testing sound effects...\n");
-
 
     printf("Playing point sound. Press any key to continue.\n");
     play_score();
@@ -273,7 +255,5 @@ void test_effects() {
         Vsync();
     }
     Cnecin(); 
-
-    printf("Sound effects test complete.\n");
 }
 
