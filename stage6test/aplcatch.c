@@ -54,7 +54,7 @@ unsigned long get_time() {
 
 int main() {
     int quit = 0;
-    int input_flag;
+    int input_flag, app_count, app_collision;
     unsigned long timeThen, timeNow, start_time;
     int tickCounter = 0;  /* Counter to track ticks for 1-second intervals */
     UINT32 *FB32 = Physbase();  
@@ -74,7 +74,7 @@ int main() {
     input_init();
 
         /* Clear both the front and back buffers at the start */
-    /*clear_screen(front_buffer);   /* Clear the initial screen buffer */
+    clear_screen(front_buffer);   /* Clear the initial screen buffer*/
     clear_screen(back_buffer);    /* Clear the back buffer as well */
 
     render_borders((UINT16 *)front_buffer);
@@ -107,11 +107,7 @@ int main() {
         timeThen = timeNow;
     }
     clear_char((UINT16 *)back_buffer, curr_model->st.x, curr_model->st.y, curr_model->st.height);
-    clear_char((UINT16 *)back_buffer, curr_model->st.x + 16, curr_model->st.y, curr_model->st.height);
-
-    /* Render the initial game model to the back buffer */
-    initialize_model(&(curr_model->apples[0]),&(curr_model->b), 
-                &(curr_model->curr_score), &(curr_model->rt));  
+    clear_char((UINT16 *)back_buffer, curr_model->st.x + 16, curr_model->st.y, curr_model->st.height); 
 
     update_model(curr_buffer, (UINT16*) curr_buffer, &(curr_model->apples[0]), 
                  &(curr_model->b), &(curr_model->curr_score), 
@@ -139,7 +135,6 @@ int main() {
         timeNow = get_time();
         if (timeNow != timeThen) {
             int b_collision = check_basket_collision(&(curr_model->b), 0);
-            int a_collision = check_apple_collision(&(curr_model->b), &(curr_model->apples[0]));
             tickCounter++;
 
             /* Every 70 ticks, decrement the round timer by 1 second */
@@ -149,26 +144,34 @@ int main() {
             }
             render_basket(curr_buffer, &(curr_model->b), 1);    
 
-            render_apple(back_buffer, &(curr_model->apples[0]), -1); /* remove apple from back buffer */
-            move_apple(&(curr_model->apples[0]));
-            if (a_collision > 0) {
-                increment_score(&(curr_model->curr_score)); 
-                render_apple(front_buffer, &(curr_model->apples[0]), -1);  /* Clear previous position */
-                reset_apple_position(&(curr_model->apples[0]));
-            } 
-            
-            if (curr_model->apples[0].y == 368) {
-                render_apple(front_buffer, &(curr_model->apples[0]), -1);  /* Clear previous position */
-                reset_apple_position(&(curr_model->apples[0])); 
+            /* move and check all apples */
+            for (app_count = 0; app_count < 3; app_count++)
+            {
+                render_apple((UINT32 *)back_buffer, &(curr_model->apples[app_count]), -1); /* remove apples old posiition from back buffer */
+
+                app_collision = move_apple(curr_model, app_count); /* check for collision */
+                switch(app_collision){
+                    case 0: /* no collision */
+                        break;
+                    case 1: /* apple_basket_collision */
+                        increment_score(curr_model);
+                        render_score((UINT16 *)back_buffer, &(curr_model->curr_score)); 
+                        render_score((UINT16 *)front_buffer, &(curr_model->curr_score));
+                        render_apple((UINT32 *)front_buffer, &(curr_model->apples[app_count]), -1);  
+                        reset_apple_position(&(curr_model->apples[app_count]));
+                        break;
+                    case 2: /* apple_ground_collision*/
+                        render_apple((UINT32 *)front_buffer, &(curr_model->apples[app_count]), -1);  
+                        reset_apple_position(&(curr_model->apples[app_count]));
+                        break;                        
+                }
+                render_apple((UINT32 *)back_buffer, &(curr_model->apples[app_count]), 1);  /* plot apples new position */
             }
 
             /* Step 4: Render remaining objects */
             /*update_model(curr_buffer, (UINT16*) curr_buffer, &(curr_model->apples[0]), &(curr_model->b), &(curr_model->curr_score), &(curr_model->rt)); */  
-            Vsync();   
-            render_apple(back_buffer, &(curr_model->apples[0]), 1);  /* plot apple */
             render_round_timer((UINT16*)curr_buffer, &(curr_model->rt));
-            render_score((UINT16*)curr_buffer, &(curr_model->curr_score)); 
-            
+            Vsync();
             Setscreen(-1, curr_buffer, -1);
             /*start_time = get_time(); while ((get_time() - start_time) < FRAME_DELAY_MS) { } */
             curr_buffer = flip_buffers(&front_buffer, &back_buffer);  
