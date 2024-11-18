@@ -59,7 +59,6 @@ DETAILS:
         - Enables tone generation on Channel A using `enable_channel`.
     - If the first note is a rest (pitch = 0):
         - Mutes Channel A by setting its volume to 0.
-    - Prepares the PSG to start playback of the melody seamlessly.
 */
 void start_music()
 {
@@ -93,7 +92,6 @@ DETAILS:
         - If the new note is a rest (pitch = 0):
             - Mutes Channel A by setting its volume to 0.
     - Increments the `time_elapsed_melody` counter to keep track of total elapsed time during playback.
-    - Ensures seamless playback of the melody, transitioning smoothly between notes without gaps.
 */
 void update_music(UINT32 *time_elapsed_melody)
 {
