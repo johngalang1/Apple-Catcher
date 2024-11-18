@@ -1,4 +1,4 @@
-[#include <stddef.h>  
+#include <stddef.h>  
 #include <osbind.h>  
 #include "events.h"
 #include "raster.h"
@@ -31,9 +31,9 @@ int check_basket_collision(basket *b, int direction)
 
 
 
-void increment_score(score *curr_score)
+void increment_score(model *curr_model)
 { 
-    curr_score->value += 1;
+    curr_model->curr_score.value += 1;
 }
 
 
@@ -53,24 +53,30 @@ void decrement_start_timer(UINT16 *base, timer_start *t)
 
 /*
 NAME: check_apple_collision
-PARAMETERS: *b - pointer to the basket structure, 
-            *a - pointer to the apple structure
+PARAMETERS: *curr_model - a pointer to the model containing the list of apples
+            i - used to get the index of the apple currently moving
 PURPOSE: To detect if a collision has occurred between the apple and the basket.
 DETAILS: Checks for overlap between the apple and basket on both the x and y axes, 
         returns 1 if a collision is detected and 0 otherwise.
 */
-int check_apple_collision(basket *b, apple *a)
+int apple_basket_collision(model *curr_model, int i)
 {
-    /* Check if the apple is within the horizontal bounds of the basket */
-    if ((a->x + a->width > b->x) && (a->x < b->x + b->width))  /* X-axis overlap */
+    /* check height first because it will (theoretically) be true less often */
+    /* slightly lower clock cycles used for checking */
+    if (curr_model->apples[i].y + APPLE_HEIGHT >= curr_model->b.y)  /* apple is at y-axis to check */
     {
-        /* Check if the apple has reached the basket's vertical position */
-        if (a->y + a->height >= b->y)  /* Y-axis overlap */
+        if ((curr_model->apples[i].x + curr_model->apples[i].width > curr_model->b.x)
+         && (curr_model->apples[i].x < curr_model->b.x + curr_model->b.width))  /* X-axis overlap */
         {
             return 1;  
         }
     }
     return 0; 
+}
+
+int apple_floor_collision(model *curr_model, int i)
+{
+    return curr_model->apples[i].y == 368;
 }
 
 /*
@@ -80,12 +86,12 @@ PURPOSE: To set a random x-position for the apple and reset its y-position above
 DETAILS: Randomizes the apple's x-position within screen borders and sets its y-position to start above the visible area.
 */
 void reset_apple_position(apple *a)
-{
-    /* Randomize x-position within the defined borders */
-    a->x = (LEFT_BORDER + 1) + (rand() % (RIGHT_BORDER - LEFT_BORDER - a->width));
+{   
+    a->x =  LEFT_BORDER + 1 + ((rand() % 11) * 32);
     
     /* Reset y-position to just above the screen */
     a->y = -a->height;
 }
+
 
 
