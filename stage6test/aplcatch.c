@@ -81,6 +81,12 @@ int main() {
     render_borders((UINT16 *)back_buffer);
 
     /* PLACE START TIMER HERE*/
+
+    render_start_timer((UINT16 *)back_buffer, &(curr_model->st));
+    render_round_timer((UINT16 *)back_buffer, &(curr_model->rt));
+    render_score((UINT16 *)back_buffer, &(curr_model->curr_score));
+    render_score((UINT16 *)front_buffer, &(curr_model->curr_score));
+    
     while (curr_model->st.value >= -1)
     {
         timeNow = get_time();
