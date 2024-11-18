@@ -12,7 +12,6 @@ typedef struct {
     int duration; /* Duration of the note in vertical blank intervals (70 Hz ticks) */
 } Note;
 
-/* Example melody */
 static Note melody[] = {
     {478, 35}, /* C, 0.5 seconds */
     {379, 35}, /* E, 0.5 seconds */
