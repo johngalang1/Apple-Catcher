@@ -1,3 +1,4 @@
+
 #ifndef RENDERER_H
 #define RENDERER_H
 #include "types.h"
@@ -38,11 +39,11 @@ void master_render(UINT32 *base32, UINT16 *base16, apple *a,
 void render_model(UINT32 *base32, UINT16 *base16, apple *a,    
         basket *b, score *score, timer_round *rt, timer_start *st); 
 
-void initialize_model(apple *a, basket *b, score *score, timer_round *rt);
+void initialize_game(UINT32 *base, model *curr_model);
 
 void update_model(UINT32 *base32, UINT16 *base16, apple *a,
         basket *b, score *score, timer_round *rt); 
 
-void render_objects(UINT32 *buffer, model *curr_model, int a_collision);
+/*void render_objects(UINT32 *buffer, model *curr_model, int a_collision);*/
 
 #endif
