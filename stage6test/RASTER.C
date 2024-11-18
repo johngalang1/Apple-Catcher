@@ -194,14 +194,17 @@ DETAILS: Calculates the starting address in the framebuffer using (x, y). Each r
 void clear_apple(UINT32 *base, int x, int y, unsigned int width, unsigned int height)
 { 
     UINT32 *next; 
-    int i;
-    /* Ensure the apple's width is always 32 pixels */
-    if (width != 32) return; 
+    int i; 
+
+    if (y < 0) {
+        height += y; 
+        y = 0;     
+    }
 
     /* Ensure the starting coordinates are valid */
     if (x < 0 || y < 0 || y + height > SCREEN_HEIGHT) return;
 
-    next = base + (y * 20) + (x >> 5); 
+    next = base + (y * 20) + (x >> 5);  
 
     for (i = 0; i < height; i++)
     {
