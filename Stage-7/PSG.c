@@ -12,9 +12,9 @@ volatile char *PSG_reg_write = (volatile char *)0xFF8802;
 /*
 NAME: write_psg
 PARAMETERS: 
-    - reg: The register number to write to (0–15).
-    - value: The value to write to the specified register (0–255).
-PURPOSE: To safely write a value to a specified PSG (Programmable Sound Generator) register.
+    - reg: The register number to write to
+    - value: The value to write to the specified register
+PURPOSE: To safely write a value to a specified PSG register.
 DETAILS: 
     - Switches to supervisor mode to gain access to the hardware registers.
     - Selects the target PSG register using the `PSG_reg_select` pointer.
@@ -37,8 +37,8 @@ void write_psg(int reg, UINT8 value)
 /*
 NAME: read_psg
 PARAMETERS: 
-    - reg: The register number to read from (0–15).
-PURPOSE: To safely read the current value from a specified PSG (Programmable Sound Generator) register.
+    - reg: The register number to read from
+PURPOSE: To safely read the current value from a specified PSG register.
 DETAILS: 
     - Switches to supervisor mode to gain access to the hardware registers.
     - Selects the target PSG register using the `PSG_reg_select` pointer.
@@ -63,16 +63,15 @@ UINT8 read_psg(int reg)
  /*
 NAME: set_tone
 PARAMETERS: 
-    - channel: The channel number to set the tone for (0 = A, 1 = B, 2 = C).
-    - tuning: The 12-bit tuning value that determines the frequency of the tone (0–4095).
-PURPOSE: To configure the tone frequency for a specified PSG (Programmable Sound Generator) channel.
+    - channel: The channel number to set the tone for.
+    - tuning: The 12-bit tuning value that determines the frequency of the tone.
+PURPOSE: To configure the tone frequency for a specified PSG channel.
 DETAILS: 
     - Validates the input parameters to ensure the channel is within range (0–2) and the tuning value is within 12 bits.
-    - Dynamically calculates the fine and coarse tuning registers for the specified channel.
+    - Calculates the fine and coarse tuning registers for the specified channel.
     - Splits the 12-bit tuning value into two parts:
         - Fine tuning (lower 8 bits) is written to the fine tune register.
         - Coarse tuning (upper 4 bits) is written to the coarse tune register.
-    - Higher tuning values result in lower frequencies (lower-pitched tones), while smaller tuning values produce higher frequencies.
 */
 
 void set_tone(int channel, int tuning)
@@ -97,9 +96,9 @@ void set_tone(int channel, int tuning)
 /*
 NAME: set_volume
 PARAMETERS: 
-    - channel: The channel number to set the volume for (0 = A, 1 = B, 2 = C).
-    - volume: The volume level to set (0–15, where 0 is mute and 15 is the maximum volume).
-PURPOSE: To configure the volume level for a specified PSG (Programmable Sound Generator) channel.
+    - channel: The channel number to set the volume for.
+    - volume: The volume level to set.
+PURPOSE: To configure the volume level for a specified PSG channel.
 DETAILS: 
     - Validates the input parameters to ensure the channel is within range (0–2) and the volume level is within 4 bits (0–15).
     - Calculates the volume register for the specified channel
@@ -121,7 +120,7 @@ void set_volume(int channel, int volume)
 /*
 NAME: enable_channel
 PARAMETERS: 
-    - channel: The channel number to configure (0 = A, 1 = B, 2 = C).
+    - channel: The channel number to configure.
     - tone_on: 1 to enable tone, 0 to disable tone for the specified channel.
     - noise_on: 1 to enable noise, 0 to disable noise for the specified channel.
 PURPOSE: To enable or disable tone and noise generation for a specific PSG (Programmable Sound Generator) channel.
@@ -171,16 +170,15 @@ void enable_channel(int channel, int tone_on, int noise_on)
 /*
 NAME: stop_sound
 PARAMETERS: None
-PURPOSE: To immediately silence all sound production from the PSG (Programmable Sound Generator).
+PURPOSE: To immediately silence all sound production from the PSG.
 DETAILS: 
-    - Disables all tone and noise generation by setting all bits in the mixer register (Register 7) to 1.
+    - Disables all tone and noise generation by setting all bits in the mixer register.
         - Writing `0x3F` to the mixer register ensures that tones and noises are disabled for Channels A, B, and C.
     - Mutes all channels by setting their volume registers (Registers 8, 9, and 10) to 0.
 */
 
 void stop_sound()
 {
-    /* 0x3F disables all tones and noises for channels A, B, and C */
     write_psg(7, 0x3F); 
     write_psg(8, 0);  
     write_psg(9, 0); 
@@ -190,7 +188,7 @@ void stop_sound()
 NAME: set_noise
 PARAMETERS: 
     - tuning: The noise tuning value (0–31).
-PURPOSE: To configure the tuning of the noise generator in the PSG (Programmable Sound Generator).
+PURPOSE: To configure the tuning of the noise generator in the PSG.
 DETAILS: 
     - Validates the input to ensure the tuning value is within the 5-bit range (0–31).
     - Writes the validated tuning value to Register 6, which controls the frequency of the noise generator.
@@ -211,15 +209,14 @@ void set_noise(int tuning)
 NAME: set_envelope
 PARAMETERS: 
     - shape: The envelope shape (0–15).
-    - sustain: The 16-bit sustain duration (0–65535).
-PURPOSE: To configure the envelope generator in the PSG (Programmable Sound Generator) with a specified shape and duration.
+    - sustain: The 16-bit sustain duration.
+PURPOSE: To configure the envelope generator in the PSG with a specified shape and duration.
 DETAILS: 
-    - Validates the input parameters to ensure the envelope shape is within the 4-bit range (0–15) and the sustain duration does not exceed 16 bits (0–65535).
-    - Writes the envelope shape to Register 13, which determines the volume modulation pattern (e.g., attack, decay, sustain, release).
+    - Validates the input parameters to ensure the envelope shape is within the 4-bit range (0–15) and the sustain duration does not exceed 16 bits.
+    - Writes the envelope shape to Register 13, which determines the volume modulation pattern.
     - Splits the 16-bit sustain duration into two 8-bit values:
         - Lower 8 bits are written to Register 11.
         - Upper 8 bits are written to Register 12.
-    - The envelope generator overrides manual volume settings, dynamically modulating the channel’s volume based on the shape and sustain duration.
 */
 void set_envelope(int shape, unsigned int sustain)
 {

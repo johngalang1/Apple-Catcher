@@ -49,7 +49,7 @@ static int remaining_duration = 0;   /* Time left for the current note */
 /*
 NAME: start_music
 PARAMETERS: None
-PURPOSE: To initialize and start playing the predefined melody on the PSG (Programmable Sound Generator).
+PURPOSE: To initialize and start playing the predefined melody on the PSG.
 DETAILS:
     - Resets the melody to the beginning by setting the `current_note_index` to 0.
     - Loads the duration of the first note into the `remaining_duration` variable.
