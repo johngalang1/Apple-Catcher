@@ -192,24 +192,3 @@ void render_borders(UINT16 *base)
     plot_vertical_line(base, LEFT_BORDER, 0, 399);
     plot_vertical_line(base, RIGHT_BORDER, 0, 399);
 }
-
-/*
-NAME: master_render
-PARAMETERS: 
-    *base32 - framebuffer (32-bit)
-    *base16 - framebuffer (16-bit)
-    *a - pointer to the apple structure
-    *b - pointer to the basket structure
-    *score - pointer to the score structure
-    *rt - pointer to the round timer structure
-PURPOSE: To render the apple, basket, score, and round timer on the screen.
-DETAILS: Calls individual render functions to display each game element at their respective positions.
-*/
-void master_render(UINT32 *base32, UINT16 *base16, apple *a,
-        basket *b, score *score, timer_round *rt)
-    {
-        render_apple(base32, a, 1);
-        render_basket(base32, b, 1);
-        render_score(base16, score);
-        render_round_timer(base16, rt);
-    }

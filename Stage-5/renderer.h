@@ -23,14 +23,13 @@ void render_round_timer(UINT16 *base, timer_round *rt);
 
 void render_start_timer(UINT16 *base, timer_start *st);
 
-/* Message Functions */ 
 void display_message(message *msg);
+
 void clear_message(message *msg);
+
 const UINT16 *get_bitmap_for_char(char c);
 
 void render_borders(UINT16 *base);
 
-void master_render(UINT32 *base32, UINT16 *base16, apple *a,
-        basket *b, score *score, timer_round *rt);
 
 #endif

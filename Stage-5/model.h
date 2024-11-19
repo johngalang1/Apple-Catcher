@@ -86,7 +86,6 @@ void set_score(score *score, int x);
 
 /* Timer Functions */
 timer_round init_round_timer();
-void decrement_round_timer(UINT16 *base, timer_round *t);
 void set_round_timer(timer_round *t, int x);
 
 timer_start init_start_timer();

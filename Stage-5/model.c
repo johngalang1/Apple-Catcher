@@ -40,7 +40,7 @@ basket init_basket()
     static basket player_basket;
         player_basket.x = 448;
         player_basket.y = 364;
-        player_basket.delta_x = 2;
+        player_basket.delta_x = 32;
         player_basket.width = BASKET_WIDTH;
         player_basket.height = BASKET_HEIGHT;
         player_basket.bitmap = basket_bitmap;

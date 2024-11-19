@@ -12,7 +12,9 @@
 /* 
 AUTHORS: John G, Zach L
 FILE NAME: aplcatch.c
-PURPOSE: CONTAINS MAIN GAME LOOP
+PURPOSE: CONTAINS MAIN GAME LOOP 
+DETIALS: IN THIS STAGE THE GAME IS TESTED WITH ONLY 1 APPLE 
+        IN FUTURE STAGES THE GAME WILL BE TESTED WITH MULTIPLE APPLES
 */
 
 /* Function to get the current clock time from the vertical blank counter */
@@ -51,7 +53,9 @@ int main() {
             if (input == 'q' || input == 'Q') {
                 quit = 1;
             } else {
-                process_input(input, &quit);
+                process_input(input, &quit); 
+                render_basket(FB32, &(curr_model->b), -1);
+                move_basket_based_on_input(&(curr_model->b));
             }
         }
 
@@ -64,13 +68,10 @@ int main() {
 
             /* Every 70 ticks, decrement the round timer by 1 second */
             if (tickCounter >= 70) {
-                decrement_round_timer(FB16, &(curr_model->rt));
+                decrement_round_timer(&(curr_model->rt));
                 tickCounter = 0;
             }
 
-            /* Erase and update basket based on user input */
-            render_basket(FB32, &(curr_model->b), -1);
-            move_basket_based_on_input(&(curr_model->b));
             render_basket(FB32, &(curr_model->b), 1);
 
             /* Update and move apple */
@@ -86,7 +87,9 @@ int main() {
             if (curr_model->apples[0].y == 368) {
                 reset_apple_position(&(curr_model->apples[0]));
             }
-            render_apple(FB32, &(curr_model->apples[0]), 1);
+            render_apple(FB32, &(curr_model->apples[0]), 1); 
+
+            render_round_timer(FB16, &(curr_model->rt));
 
             /* Update timeThen to track the next tick */
             timeThen = timeNow;

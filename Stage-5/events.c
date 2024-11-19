@@ -30,17 +30,15 @@ int check_basket_collision(basket *b, int direction)
 }
 
 
-
 void increment_score(score *curr_score)
 { 
     curr_score->value += 1;
 }
 
 
-void decrement_round_timer(UINT16 *base, timer_round *t)
+void decrement_round_timer(timer_round *t)
 {
     t->value -= 1;
-    render_round_timer(base, t);
 }
 
 

@@ -34,9 +34,9 @@ void process_input(char input, int *quit) {
         case 'd':  /* Right key */
             current_basket_action = BASKET_MOVE_RIGHT;
             break;
-        case 'q':  /* Quit key */
+        case 'q':  
         case 'Q':
-            *quit = 1;  /* Sets quit flag to exit the game loop */
+            *quit = 1;  
             break;
         default:
             current_basket_action = BASKET_MOVE_NONE;

@@ -19,9 +19,6 @@ void reset_apple_position(apple *a);
 
 void increment_score(score *curr_score);
 
-void decrement_round_timer(UINT16 *base, timer_round *t);
-
-int is_start_time_up(timer_start *t);
-
+void decrement_round_timer(timer_round *t);
 
 #endif
