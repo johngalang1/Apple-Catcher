@@ -11,72 +11,21 @@
 /* 
 AUTHORS: John G, Zach L
 FILE NAME: aplcatch.c
-PURPOSE: CONTAINS MAIN GAME LOOP
+PURPOSE: CONTAINS MAIN GAME LOOP WITH MULTIPLE APPLES
 */ 
 
 UINT8 back_buffer_array[32260]; 
 
 /* Function to allocate and align back buffer */
-UINT32* allocate_back_buffer() {
-    UINT8 *temp = back_buffer_array;
-
-    /* Align to the nearest 256-byte boundary using bitwise operations */
-    temp = (UINT8*)(((UINT32)temp + 255) & ~255);
-    
-    return (UINT32*)temp;
-}
+UINT32* allocate_back_buffer();
 
 /* Function to flip buffers: display back_buffer and swap with front_buffer */
-UINT32* flip_buffers(UINT32 **front_buffer, UINT32 **back_buffer) {
-    /* Swap front and back buffers */
-    UINT32 *temp = *front_buffer;
-    *front_buffer = *back_buffer;
-    *back_buffer = temp;
-    return *front_buffer;
-}
+UINT32* flip_buffers(UINT32 **front_buffer, UINT32 **back_buffer);
 
 /* Function to get the current clock time from the vertical blank counter */
-unsigned long get_time() {
-    unsigned long *timer_address = (unsigned long *)0x462;
-    unsigned long time;
-
-    unsigned long old_sr = Super(0);  
-    time = *timer_address;
-    Super(old_sr);                    
-
-    return time;
-} 
-
+unsigned long get_time();
 void run_start_timer(model *curr_model, UINT32 *back_buffer, 
-                    unsigned long timeThen, unsigned long timeNow) 
-{
-    int tickCounter = 0;
-
-    timeThen = get_time();
-
-    while (curr_model->st.value >= -1) {
-        timeNow = get_time();
-        if (timeNow != timeThen) {
-            tickCounter++;
-        }
-        if (tickCounter >= 70) {
-            if (curr_model->st.value > 0) {
-                render_start_timer((UINT16 *)back_buffer, &(curr_model->st));
-            } else {
-                plot_char((UINT16 *)back_buffer, curr_model->st.x, curr_model->st.y, 
-                          letterG_bitmap, curr_model->st.height);
-                plot_char((UINT16 *)back_buffer, curr_model->st.x + 16, curr_model->st.y,
-                          letterO_bitmap, curr_model->st.height);
-            }
-            decrement_start_timer(&(curr_model->st));
-            tickCounter = 0;
-        }
-        timeThen = timeNow;
-    }
-
-    clear_char((UINT16 *)back_buffer, curr_model->st.x, curr_model->st.y, curr_model->st.height);
-    clear_char((UINT16 *)back_buffer, curr_model->st.x + 16, curr_model->st.y, curr_model->st.height);
-}
+                    unsigned long timeThen, unsigned long timeNow);
 
 int main() {
     int quit = 0;
@@ -178,4 +127,63 @@ int main() {
     render_message((UINT16*) curr_buffer); 
     Setscreen(-1, original_buffer, -1);
     return 0;
+} 
+
+void run_start_timer(model *curr_model, UINT32 *back_buffer, 
+                    unsigned long timeThen, unsigned long timeNow) 
+{
+    int tickCounter = 0;
+
+    timeThen = get_time();
+
+    while (curr_model->st.value >= -1) {
+        timeNow = get_time();
+        if (timeNow != timeThen) {
+            tickCounter++;
+        }
+        if (tickCounter >= 70) {
+            if (curr_model->st.value > 0) {
+                render_start_timer((UINT16 *)back_buffer, &(curr_model->st));
+            } else {
+                plot_char((UINT16 *)back_buffer, curr_model->st.x, curr_model->st.y, 
+                          letterG_bitmap, curr_model->st.height);
+                plot_char((UINT16 *)back_buffer, curr_model->st.x + 16, curr_model->st.y,
+                          letterO_bitmap, curr_model->st.height);
+            }
+            decrement_start_timer(&(curr_model->st));
+            tickCounter = 0;
+        }
+        timeThen = timeNow;
+    }
+
+    clear_char((UINT16 *)back_buffer, curr_model->st.x, curr_model->st.y, curr_model->st.height);
+    clear_char((UINT16 *)back_buffer, curr_model->st.x + 16, curr_model->st.y, curr_model->st.height);
+} 
+
+unsigned long get_time() {
+    unsigned long *timer_address = (unsigned long *)0x462;
+    unsigned long time;
+
+    unsigned long old_sr = Super(0);  
+    time = *timer_address;
+    Super(old_sr);                    
+
+    return time;
+}  
+
+UINT32* flip_buffers(UINT32 **front_buffer, UINT32 **back_buffer) {
+    /* Swap front and back buffers */
+    UINT32 *temp = *front_buffer;
+    *front_buffer = *back_buffer;
+    *back_buffer = temp;
+    return *front_buffer;
+} 
+
+UINT32* allocate_back_buffer() {
+    UINT8 *temp = back_buffer_array;
+
+    /* Align to the nearest 256-byte boundary using bitwise operations */
+    temp = (UINT8*)(((UINT32)temp + 255) & ~255);
+    
+    return (UINT32*)temp;
 }
