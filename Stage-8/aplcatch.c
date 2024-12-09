@@ -120,7 +120,7 @@ void play_game(UINT32 *original_buffer) {
                  &(curr_model->rt)); 
 
     /* Main game loop */
-    while (!quit && curr_model->rt.value > 0) {  
+    while (!quit) {  
         input_flag = 0;
         if (check_input()) {
             input = get_input();
@@ -160,6 +160,9 @@ void play_game(UINT32 *original_buffer) {
             if (tickCounter >= 70) {
                 decrement_round_timer(&(curr_model->rt));
                 tickCounter = 0;
+                if(curr_model->rt.value <= 0){
+                    quit = 1;
+                }
             }
             render_basket(curr_buffer, &(curr_model->b), 1);    
 
