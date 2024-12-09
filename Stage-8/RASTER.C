@@ -33,7 +33,7 @@ void plot_apple_32(UINT32 *base, UINT16 x, int y,
     {
         i = -y; 
         k = 0;  
-        next = base + (k * 20) + (x >> 5); 
+        next = base + (x >> 5); 
     }
     while(i < height && k < SCREEN_HEIGHT)
     {
